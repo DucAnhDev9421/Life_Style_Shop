@@ -1,0 +1,32 @@
+---
+description: Frontend standards for React UI work
+globs: frontend/**/*.{js,jsx,ts,tsx,css,scss}
+alwaysApply: false
+---
+
+# Frontend Rules
+
+## Architecture
+- Keep UI components presentational; move side effects to hooks/services.
+- Reuse shared components before creating new ones.
+- Keep page-level state close to route pages; avoid global state unless needed.
+
+## State and data fetching
+- Use one source of truth for each feature (Redux slice or local state, not both).
+- Handle loading, empty, and error states for every async view.
+- Normalize API responses before storing in state when lists are large.
+
+## UI and UX
+- Mobile-first responsive behavior is required.
+- Use accessible labels, roles, and keyboard-friendly interactions.
+- Show clear feedback for async actions (pending, success, failure).
+
+## Performance
+- Prefer lazy loading for heavy routes/components.
+- Avoid unnecessary re-renders with memoization only when measurable.
+- Optimize images and avoid rendering large lists without pagination/virtualization.
+
+## Code quality
+- Keep components focused; split files that become hard to scan.
+- Avoid inline business logic in JSX; extract helpers/hooks.
+- Add tests for critical user flows and state transitions.

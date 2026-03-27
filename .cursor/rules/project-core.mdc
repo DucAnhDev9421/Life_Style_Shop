@@ -1,0 +1,32 @@
+---
+description: Core rules for all work in this repository
+alwaysApply: true
+---
+
+# Project Core Rules
+
+## Work style
+- Always read `Agent.md` before starting any implementation task.
+- Understand existing code before editing; keep changes focused and minimal.
+- Do not modify unrelated files or large formatting-only areas.
+- Prefer small, testable steps and report what changed clearly.
+
+## Code quality
+- Prefer ES6+ syntax and modern JavaScript patterns by default.
+- Keep functions cohesive and avoid duplicate logic.
+- Use clear names and early returns over deep nesting.
+- Add comments only when logic is non-obvious.
+
+## Safety
+- Never hardcode secrets, tokens, or credentials.
+- Avoid destructive git operations unless explicitly requested.
+- Preserve backward compatibility unless the task requires breaking changes.
+
+## Validation
+- Run the most relevant checks/tests after edits when possible.
+- If checks cannot be run, state what was not verified and why.
+
+## Communication
+- Prefer Vietnamese when explaining code and implementation decisions.
+- Explain trade-offs briefly when multiple implementation choices exist.
+- Ask for confirmation before high-impact changes (schema, API contracts, auth flow).

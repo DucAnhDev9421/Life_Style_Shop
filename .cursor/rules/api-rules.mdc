@@ -1,0 +1,32 @@
+---
+description: API contract and endpoint consistency rules
+globs: backend/src/{routes,controllers,validators}/**/*.{js,ts}
+alwaysApply: false
+---
+
+# API Rules
+
+## Contract design
+- Use resource-oriented naming and stable endpoint paths.
+- Prefer additive contract changes; avoid breaking response fields.
+- Version API when introducing breaking changes.
+
+## Request/response consistency
+- Use consistent pagination/filter/sort query parameters across endpoints.
+- Return consistent envelope for success and error responses.
+- Use HTTP status codes accurately (400/401/403/404/409/422/500).
+
+## Validation and idempotency
+- Validate request schema before controller logic.
+- Enforce idempotency for create/payment/refund endpoints.
+- Reject unknown/unsafe fields when writing domain data.
+
+## Auth and authorization
+- Separate authentication failure (401) from authorization failure (403).
+- Check ownership/tenant boundaries for user-scoped resources.
+- Protect admin endpoints with explicit role checks.
+
+## Reliability and observability
+- Add request correlation IDs for tracing.
+- Log endpoint errors with route, actor, and request context.
+- Keep API docs/examples in sync with implemented behavior.

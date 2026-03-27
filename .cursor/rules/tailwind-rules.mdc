@@ -1,0 +1,47 @@
+---
+description: Tailwind CSS standards for frontend styling
+globs: frontend/**/*.{js,jsx,ts,tsx,css,scss}
+alwaysApply: false
+---
+
+# Tailwind Rules
+
+## Utility-first conventions
+- Prefer Tailwind utilities over custom CSS for common styling.
+- Keep class names grouped by purpose: layout -> spacing -> typography -> colors -> effects.
+- Avoid inline style unless the value is truly dynamic and cannot be expressed with Tailwind tokens.
+
+## Responsive design
+- Build mobile-first by default.
+- Use breakpoints consistently: `sm`, `md`, `lg`, `xl`, `2xl`.
+- Do not duplicate entire class groups across breakpoints unless necessary.
+
+## Design consistency
+- Use project spacing scale (`p-`, `m-`, `gap-`) consistently.
+- Reuse color and typography tokens from `tailwind.config`.
+- Prefer semantic component patterns for repeated UI blocks (button/card/badge variants).
+
+## Readability and maintainability
+- Keep class strings readable; extract repeated patterns using reusable components.
+- If a class list exceeds readability, use helper composition (`clsx`, `cva`, utility builder).
+- Avoid conflicting utilities (example: multiple `text-*` or `bg-*` in the same state scope).
+
+## State and interaction
+- Always define clear hover/focus/active/disabled states for interactive elements.
+- Use `focus-visible` styles for accessibility.
+- Keep transition usage intentional; avoid over-animating basic interactions.
+
+## Dark mode
+- Support dark mode using `dark:` variants where relevant.
+- Ensure contrast is accessible in both light and dark themes.
+- Test key screens in both themes before merging.
+
+## Performance and build hygiene
+- Avoid dynamic class name construction that prevents Tailwind purge from detecting classes.
+- Prefer safelist only when dynamic classes are unavoidable.
+- Remove dead classes and stale utility patterns during refactors.
+
+## Collaboration checklist
+- New UI must be responsive at minimum on mobile + desktop.
+- Reused style patterns should be centralized into shared components.
+- Visual changes should include before/after screenshots in PR when possible.

@@ -1,0 +1,32 @@
+---
+description: Backend standards for services and domain logic
+globs: backend/src/**/*.{js,ts}
+alwaysApply: false
+---
+
+# Backend Rules
+
+## Layering
+- Keep controller thin: validate input, call service, map response.
+- Put business rules in services, not in routes/controllers.
+- Keep data-access logic in model/repository utilities, not in controllers.
+
+## Validation and errors
+- Validate all external input (params, query, body) before business logic.
+- Return consistent error shape with machine-readable codes.
+- Never swallow errors; log context and rethrow/forward to error middleware.
+
+## Security
+- Enforce auth and role checks at route boundary.
+- Never trust client-calculated totals, discounts, or role fields.
+- Do not expose secrets or internal stack traces in API responses.
+
+## Data integrity
+- Use transaction/atomic update for multi-step writes (order/payment/inventory).
+- Make retry-sensitive operations idempotent.
+- Store auditable status transitions for order and payment changes.
+
+## Maintainability
+- Keep functions small and deterministic where possible.
+- Prefer explicit naming over clever abstractions.
+- Add tests for business-critical flows (checkout, cancel, refund, stock sync).
