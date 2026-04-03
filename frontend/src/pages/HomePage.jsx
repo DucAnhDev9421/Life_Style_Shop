@@ -1,30 +1,46 @@
-import { Button } from 'antd'
+import HeroSection from '../components/luxury/HeroSection'
+import BrandStorySection from '../components/luxury/BrandStorySection'
+import CuratedProductsSection from '../components/luxury/CuratedProductsSection'
+import BrandValuesSection from '../components/luxury/BrandValuesSection'
+import MembershipCTA from '../components/luxury/MembershipCTA'
 
 const HomePage = () => {
   return (
-    <section className="space-y-8 py-12">
-      <div className="space-y-4">
-        <p className="inline-flex rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary uppercase tracking-wider">
-          Hệ thống đã sẵn sàng
-        </p>
-        <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
-          Life Style Shop <span className="text-primary">E-commerce</span>
-        </h2>
-        <p className="max-w-2xl text-lg text-slate-400">
-          Nền tảng mua sắm hiện đại được xây dựng với React, Tailwind CSS và
-          Express. Đã cấu hình màu chủ đạo <code className="text-primary">#286AF8</code>.
-        </p>
-      </div>
-
-      <div className="flex gap-4">
-        <Button type="primary" size="large" className="h-12 px-8 font-semibold">
-          Bắt đầu mua sắm
-        </Button>
-        <Button size="large" className="h-12 px-8 font-semibold border-slate-700 text-slate-300">
-          Tìm hiểu thêm
-        </Button>
-      </div>
-    </section>
+    <div className="bg-[#fbfbfd]">
+      <HeroSection />
+      <BrandValuesSection />
+      <CuratedProductsSection />
+      <BrandStorySection />
+      <MembershipCTA />
+      
+      {/* Tech Footer */}
+      <footer className="bg-[#f5f5f7] py-10 px-6 border-t border-gray-200 mt-auto">
+        <div className="max-w-7xl mx-auto">
+          <div className="border-b border-gray-300 pb-8 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h2 className="text-sm font-bold text-[#1d1d1f] flex items-center gap-2">
+              <div className="w-3 h-3 bg-black rounded-sm" /> LIFESTYLE TECH
+            </h2>
+            <div className="flex gap-6 text-xs text-gray-600 font-medium tracking-wide">
+              <a href="#" className="hover:text-black">Store</a>
+              <a href="#" className="hover:text-black">Mac</a>
+              <a href="#" className="hover:text-black">iPad</a>
+              <a href="#" className="hover:text-black">iPhone</a>
+              <a href="#" className="hover:text-black">Support</a>
+            </div>
+          </div>
+          
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium">
+            <p>Copyright © 2026 Lifestyle Tech Inc. All rights reserved.</p>
+            <div className="flex gap-4">
+              <a href="#" className="hover:text-black border-r border-gray-300 pr-4">Privacy Policy</a>
+              <a href="#" className="hover:text-black border-r border-gray-300 pr-4">Terms of Use</a>
+              <a href="#" className="hover:text-black border-r border-gray-300 pr-4">Sales Policy</a>
+              <a href="#" className="hover:text-black">Legal</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
   )
 }
 
