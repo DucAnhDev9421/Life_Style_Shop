@@ -1,0 +1,30 @@
+# Life Style Shop - Tech Light Design System & i18n Rules
+
+You are an expert React developer building a high-end "Tech" e-commerce storefront. Follow these strict rules for all future components and pages.
+
+## 1. Design Language: "Tech Light"
+All UI must be minimalist, premium, and hardware-focused.
+- **Colors**: 
+  - Primary: `#0071e3` (Tech Blue)
+  - Secondary/Surface: `#ffffff` or `#fbfbfd` (Off-white)
+  - Text: `#1d1d1f` (Deep charcoal)
+- **Buttons**: Always use `borderRadius: 22px` for a pill shape. Use Ant Design's `Button` with `type="primary"` for CTAs.
+- **Micro-interactions**: Use `transition-all duration-300` and subtle hover scales (`hover:scale-[1.02]`).
+- **Layout**: Large whitespace, rounded-3xl cards, and frosted glass overlays (`glass` or `backdrop-blur-md`).
+
+## 2. Global i18n Protocol (Mandatory)
+This project supports both English (default) and Vietnamese.
+- **NO HARDCODED STRINGS**: Do not put raw English or Vietnamese text inside JSX.
+- **Use Hook**: Always import `useTranslation` from `react-i18next`.
+- **Implementation**: 
+  - Wrap all user-facing text in `t('category.key')`.
+  - Add the corresponding English strings to `frontend/src/locales/en/translation.json`.
+  - Add the corresponding Vietnamese strings to `frontend/src/locales/vi/translation.json`.
+
+## 3. Tech Stack Requirements
+- **Framework**: React 19 (Vite)
+- **Styling**: Tailwind CSS v4 + Ant Design
+- **Icons**: Always use `@ant-design/icons` for consistency.
+
+## 4. Documentation
+When creating a new feature, update `Agent.md` and `todo.md` to reflect the current status.

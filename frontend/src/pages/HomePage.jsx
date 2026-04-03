@@ -3,8 +3,12 @@ import BrandStorySection from '../components/luxury/BrandStorySection'
 import CuratedProductsSection from '../components/luxury/CuratedProductsSection'
 import BrandValuesSection from '../components/luxury/BrandValuesSection'
 import MembershipCTA from '../components/luxury/MembershipCTA'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const HomePage = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="bg-[#fbfbfd]">
       <HeroSection />
@@ -18,24 +22,24 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="border-b border-gray-300 pb-8 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <h2 className="text-sm font-bold text-[#1d1d1f] flex items-center gap-2">
-              <div className="w-3 h-3 bg-black rounded-sm" /> LIFESTYLE TECH
+              <div className="w-3 h-3 bg-[#0071e3] rounded-sm" /> LIFESTYLE TECH
             </h2>
             <div className="flex gap-6 text-xs text-gray-600 font-medium tracking-wide">
-              <a href="#" className="hover:text-black">Store</a>
-              <a href="#" className="hover:text-black">Mac</a>
-              <a href="#" className="hover:text-black">iPad</a>
-              <a href="#" className="hover:text-black">iPhone</a>
-              <a href="#" className="hover:text-black">Support</a>
+              <Link to="/search" className="hover:text-[#0071e3] transition-colors">{t('footer.store')}</Link>
+              <Link to="/mac" className="hover:text-[#0071e3] transition-colors">{t('footer.mac')}</Link>
+              <Link to="/ipad" className="hover:text-[#0071e3] transition-colors">{t('footer.ipad')}</Link>
+              <Link to="/blog" className="hover:text-[#0071e3] transition-colors">{t('footer.newsroom')}</Link>
+              <Link to="/support" className="hover:text-[#0071e3] transition-colors">{t('footer.support')}</Link>
             </div>
           </div>
           
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium">
-            <p>Copyright © 2026 Lifestyle Tech Inc. All rights reserved.</p>
+            <p>{t('footer.copyright')}</p>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-black border-r border-gray-300 pr-4">Privacy Policy</a>
-              <a href="#" className="hover:text-black border-r border-gray-300 pr-4">Terms of Use</a>
-              <a href="#" className="hover:text-black border-r border-gray-300 pr-4">Sales Policy</a>
-              <a href="#" className="hover:text-black">Legal</a>
+              <a href="#" className="hover:text-[#0071e3] border-r border-gray-300 pr-4 transition-colors">{t('footer.privacy')}</a>
+              <a href="#" className="hover:text-[#0071e3] border-r border-gray-300 pr-4 transition-colors">{t('footer.terms')}</a>
+              <a href="#" className="hover:text-[#0071e3] border-r border-gray-300 pr-4 transition-colors">{t('footer.sales')}</a>
+              <a href="#" className="hover:text-[#0071e3] transition-colors">{t('footer.legal')}</a>
             </div>
           </div>
         </div>

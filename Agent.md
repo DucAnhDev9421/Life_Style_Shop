@@ -459,21 +459,28 @@ npm start
 
 ---
 
-## 📚 Technology Stack Summary
+## 🎨 Dev Standards & Design System
 
-| Layer | Technology |
-|-------|-----------|
-| **Frontend Framework** | React 18+ |
-| **Styling** | Tailwind CSS |
-| **UI Components** | Ant Design |
-| **State Management** | Redux Toolkit |
-| **HTTP Client** | Axios |
-| **Backend Runtime** | Node.js |
-| **Backend Framework** | Express.js / Fastify |
-| **Database** | MongoDB |
-| **Authentication** | JWT (JSON Web Token) |
-| **Image Hosting** | Cloudinary |
-| **Package Manager** | npm / yarn |
+### "Tech Light" Aesthetic
+All new UI components must strictly adhere to the following design language:
+- **Primary Palette**: 
+  - **Tech Blue**: `#0071e3` (Buttons, active states, accents)
+  - **Surface**: `#fbfbfd` (Main background)
+  - **Contrast Text**: `#1d1d1f` (Primary headings and body)
+- **Typography**: Apple-style (San Francisco inspired). Use `Inter` or `-apple-system`.
+- **Components**: 
+  - Pill-shaped buttons (`borderRadius: 22px`).
+  - Frosted glass effects (`backdrop-blur-md`) for overlays and badges.
+  - Large, high-quality hardware-focused photography.
+  - Generous whitespace and minimalist layout.
+
+### Internationalization (i18n)
+- **Framework**: `react-i18next`.
+- **Mandatory Rule**: Never use hardcoded text strings in JSX.
+- **Implementation**:
+  - Always wrap text in `t('category.key')`.
+  - Add new strings to `frontend/src/locales/en/translation.json` and `frontend/src/locales/vi/translation.json`.
+  - Default language is English (`en`).
 
 ---
 
