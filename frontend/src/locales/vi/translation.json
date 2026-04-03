@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "shop": "Cửa hàng",
+    "mac": "Mac",
+    "ipad": "iPad",
+    "newsroom": "Tin tức"
+  },
+  "hero": {
+    "subtitle": "Thế Hệ Mới Nhất",
+    "title1": "Hiệu Năng Chuyên Nghiệp.",
+    "title2": "Tối Đa Hóa Hiệu Quả.",
+    "desc": "Được tăng cường bởi kiến trúc vi xử lý M-series mới. Tốc độ kinh ngạc kết hợp cùng thời lượng pin cả ngày.",
+    "buy": "Mua Ngay",
+    "learn": "Tìm hiểu thêm",
+    "cpu": "CPU 12 nhân",
+    "ram": "Lên đến 32GB RAM Thống Nhất"
+  },
+  "story": {
+    "title": "Kỳ Quan Kỹ Thuật.",
+    "subtitle": "Chúng tôi thiết kế lại hoàn toàn cấu trúc tản nhiệt để bạn bứt phá mọi giới hạn, mà không bao giờ bị nóng máy.",
+    "cooling_title": "Tản Nhiệt Nâng Cao",
+    "cooling_desc": "Hệ thống quạt kép tiêu chuẩn hàng không tăng 50% lưu lượng gió.",
+    "display_title": "Màn Hình Retina XDR",
+    "display_desc": "Độ sáng tối đa 1000 nits. Tỷ lệ tương phản 1.000.000:1."
+  },
+  "products": {
+    "title": "Mới nhất.",
+    "subtitle": "Khám phá những sản phẩm mới ra mắt ngay bây giờ.",
+    "new": "Mới",
+    "buy": "Mua",
+    "load_more": "Xem Thêm Sản Phẩm"
+  },
+  "values": {
+    "delivery_title": "Giao hàng nhanh, miễn phí",
+    "delivery_desc": "Hoặc nhận sản phẩm có sẵn tại cửa hàng Apple.",
+    "payment_title": "Trả góp theo thời gian",
+    "payment_desc": "Nhận hoàn tiền Daily Cash 3% và trả góp không lãi suất.",
+    "specialist_title": "Chuyên gia Công nghệ",
+    "specialist_desc": "Mua sắm 1-1 cùng Chuyên gia. Trực tuyến hoặc tại cửa hàng."
+  },
+  "cta": {
+    "title": "Luôn cập nhật thông tin.",
+    "subtitle": "Đăng ký để nhận tin tức mới nhất về sản phẩm, cập nhật phần mềm và các sự kiện độc quyền.",
+    "placeholder": "Nhập địa chỉ email của bạn",
+    "button": "Đăng ký",
+    "note": "Bạn có thể hủy đăng ký bất kỳ lúc nào. Xem Chính sách Bảo mật của chúng tôi."
+  },
+  "search": {
+    "breadcrumb": "Trang chủ / Tìm kiếm",
+    "showing": "Hiển thị {{count}} kết quả",
+    "filters": "Bộ lọc",
+    "sort_by": "Sắp xếp theo:",
+    "categories": "Danh mục",
+    "price_range": "Khoảng giá",
+    "features": "Tính năng",
+    "sort_options": {
+      "featured": "Nổi bật",
+      "newest": "Mới nhất",
+      "price_low": "Giá: Từ thấp đến cao",
+      "price_high": "Giá: Từ cao đến thấp"
+    }
+  },
+  "blog": {
+    "title": "Phòng tin tức",
+    "all_stories": "Tất cả bài viết",
+    "engineering": "Kỹ thuật",
+    "software": "Phần mềm",
+    "hardware": "Phần cứng",
+    "corporate": "Doanh nghiệp",
+    "featured": "Nổi bật",
+    "latest": "Tin mới nhất",
+    "read_full": "Đọc toàn bộ bài viết",
+    "load_more": "Xem thêm tin tức",
+    "read_time": "{{count}} phút đọc"
+  },
+  "footer": {
+    "store": "Cửa hàng",
+    "mac": "Mac",
+    "ipad": "iPad",
+    "newsroom": "Tin tức",
+    "support": "Hỗ trợ",
+    "copyright": "Bản quyền © 2026 Lifestyle Tech Inc. Đã đăng ký bản quyền.",
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản sử dụng",
+    "sales": "Chính sách bán hàng",
+    "legal": "Pháp lý"
+  }
+}

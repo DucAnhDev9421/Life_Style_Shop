@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "shop": "Shop",
+    "mac": "Mac",
+    "ipad": "iPad",
+    "newsroom": "Newsroom"
+  },
+  "hero": {
+    "subtitle": "The Next Generation",
+    "title1": "Pro Performance.",
+    "title2": "Maximum Efficiency.",
+    "desc": "Supercharged by the new M-series architecture. Mind-blowing speed meets all-day battery life.",
+    "buy": "Buy Now",
+    "learn": "Learn more",
+    "cpu": "12-core CPU",
+    "ram": "Upto 32GB Unified RAM"
+  },
+  "story": {
+    "title": "Engineering Marvel.",
+    "subtitle": "We redesigned the thermal architecture from the ground up to let you push the boundaries of what's possible, without breaking a sweat.",
+    "cooling_title": "Advanced Cooling",
+    "cooling_desc": "Dual aerospace-grade fans deliver 50% more airflow.",
+    "display_title": "Retina Display XDR",
+    "display_desc": "1000 nits sustained brightness. 1,000,000:1 contrast ratio."
+  },
+  "products": {
+    "title": "The latest.",
+    "subtitle": "Take a look at what's new, right now.",
+    "new": "New",
+    "buy": "Buy",
+    "load_more": "Load More Products"
+  },
+  "values": {
+    "delivery_title": "Fast, free delivery",
+    "delivery_desc": "Or pick up available items at an Apple Store.",
+    "payment_title": "Pay over time",
+    "payment_desc": "Get 3% Daily Cash back and pay over time, interest-free.",
+    "specialist_title": "Tech Specialists",
+    "specialist_desc": "Shop one on one with a Specialist. Online or in store."
+  },
+  "cta": {
+    "title": "Stay in the loop.",
+    "subtitle": "Sign up to get the latest news on product releases, software updates, and exclusive events.",
+    "placeholder": "Enter your email address",
+    "button": "Subscribe",
+    "note": "You can opt out at any time. View our Privacy Policy."
+  },
+  "search": {
+    "breadcrumb": "Home / Search",
+    "showing": "Showing {{count}} results",
+    "filters": "Filters",
+    "sort_by": "Sort by:",
+    "categories": "Categories",
+    "price_range": "Price Range",
+    "features": "Features",
+    "sort_options": {
+      "featured": "Featured",
+      "newest": "Newest Arrivals",
+      "price_low": "Price: Low to High",
+      "price_high": "Price: High to Low"
+    }
+  },
+  "blog": {
+    "title": "Newsroom",
+    "all_stories": "All Stories",
+    "engineering": "Engineering",
+    "software": "Software",
+    "hardware": "Hardware",
+    "corporate": "Corporate",
+    "featured": "Featured",
+    "latest": "Latest News",
+    "read_full": "Read full article",
+    "load_more": "Load More Articles",
+    "read_time": "{{count}} min read"
+  },
+  "footer": {
+    "store": "Shop",
+    "mac": "Mac",
+    "ipad": "iPad",
+    "newsroom": "Newsroom",
+    "support": "Support",
+    "copyright": "Copyright © 2026 Lifestyle Tech Inc. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "sales": "Sales Policy",
+    "legal": "Legal"
+  }
+}
