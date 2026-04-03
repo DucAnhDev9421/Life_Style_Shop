@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #286af8;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-active: #1e40af;
+}
+
 :root {
   color-scheme: dark;
+  --primary: #286af8;
 }
 
 * {
