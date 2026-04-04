@@ -3,6 +3,8 @@ import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 import SearchResultsPage from './pages/SearchResultsPage'
 import BlogPage from './pages/BlogPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import { ConfigProvider } from 'antd'
 import { 
   UserOutlined, 
@@ -14,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 function App() {
   const { t, i18n } = useTranslation()
+  const user = localStorage.getItem('user');
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'vi' : 'en'
@@ -71,7 +74,7 @@ function App() {
               <Link to="/wishlist" className="transition-colors hover:text-white">
                 <HeartOutlined className="text-[17px]" />
               </Link>
-              <Link to="/account" className="transition-colors hover:text-white">
+              <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-white">
                 <UserOutlined className="text-[17px]" />
               </Link>
               <Link to="/cart" className="transition-colors hover:text-white flex items-center relative group">
@@ -99,6 +102,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
