@@ -4,10 +4,12 @@ import NotFoundPage from './pages/NotFoundPage'
 import SearchResultsPage from './pages/SearchResultsPage'
 import BlogPage from './pages/BlogPage'
 import ProductDetailPage from './pages/ProductDetailPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import { ConfigProvider } from 'antd'
-import { 
-  UserOutlined, 
-  ShoppingCartOutlined, 
+import {
+  UserOutlined,
+  ShoppingCartOutlined,
   HeartOutlined,
   SearchOutlined
 } from '@ant-design/icons'
@@ -15,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 
 function App() {
   const { t, i18n } = useTranslation()
+  const user = localStorage.getItem('user');
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'vi' : 'en'
@@ -56,7 +59,7 @@ function App() {
                   LIFESTYLE TECH
                 </h1>
               </Link>
-              
+
               <div className="hidden md:flex gap-6 items-center text-[12px] font-bold uppercase tracking-widest text-blue-50">
                 <Link className="transition-colors hover:text-white" to="/search">{t('nav.shop')}</Link>
                 <Link className="transition-colors hover:text-white" to="/mac">{t('nav.mac')}</Link>
@@ -72,7 +75,7 @@ function App() {
               <Link to="/wishlist" className="transition-colors hover:text-white">
                 <HeartOutlined className="text-[17px]" />
               </Link>
-              <Link to="/account" className="transition-colors hover:text-white">
+              <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-white">
                 <UserOutlined className="text-[17px]" />
               </Link>
               <Link to="/cart" className="transition-colors hover:text-white flex items-center relative group">
@@ -81,11 +84,11 @@ function App() {
                   0
                 </span>
               </Link>
-              
+
               <div className="h-4 w-px bg-blue-300 ml-1" />
-              
+
               {/* Language Switcher */}
-              <button 
+              <button
                 onClick={toggleLanguage}
                 className="text-xs font-bold text-white uppercase hover:text-blue-200 transition-colors cursor-pointer w-6"
               >
@@ -101,6 +104,8 @@ function App() {
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
