@@ -1,9 +1,13 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 import SearchResultsPage from './pages/SearchResultsPage'
+import ProductListPage from './pages/ProductListPage'
+import WishlistPage from './pages/WishlistPage'
 import BlogPage from './pages/BlogPage'
 import ProductDetailPage from './pages/ProductDetailPage'
+import { ConfigProvider, Input } from 'antd'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import { ConfigProvider } from 'antd'
@@ -11,12 +15,15 @@ import {
   UserOutlined,
   ShoppingCartOutlined,
   HeartOutlined,
-  SearchOutlined
+  SearchOutlined,
+  MessageOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
 function App() {
   const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
+  const [headerQ, setHeaderQ] = useState('')
   const user = localStorage.getItem('user');
 
   const toggleLanguage = () => {
@@ -24,42 +31,109 @@ function App() {
     i18n.changeLanguage(newLang)
   }
 
+  const submitHeaderSearch = () => {
+    const q = headerQ.trim()
+    navigate(q ? `/search?q=${encodeURIComponent(q)}` : '/search')
+  }
+
   return (
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#0071e3', // Tech blue
+          colorPrimary: '#0071e3',
           colorBgBase: '#ffffff',
           fontFamily: 'Inter, -apple-system, sans-serif',
-          borderRadius: 8, // Smooth rounded corners for tech
+          borderRadius: 8,
         },
         components: {
           Button: {
             controlHeightLG: 44,
-            borderRadiusLG: 22, // Pill shaped buttons
+            borderRadiusLG: 22,
             primaryShadow: '0 4px 14px 0 rgba(0,113,227,0.39)',
           },
           Input: {
             controlHeightLG: 44,
             borderRadiusLG: 8,
-          }
-        }
+          },
+        },
       }}
     >
-      <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] pb-10">
-        {/* Sleek ocean blue tech header */}
-        <header className="sticky top-0 z-50 bg-[#0071e3] shadow-lg shadow-blue-500/20 transition-all duration-300">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-14">
-            <div className="flex items-center gap-10">
-              <Link to="/" className="flex items-center">
-                <h1 className="text-lg font-bold tracking-tight text-white inline-flex items-center gap-2">
-                  <div className="w-5 h-5 bg-white rounded-sm flex items-center justify-center">
-                    <div className="w-2 h-2 bg-[#0071e3] rounded-full animate-pulse" />
-                  </div>
-                  LIFESTYLE TECH
-                </h1>
+      <div className="min-h-screen bg-white text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] pb-10">
+        <header className="sticky top-0 z-50 bg-[#0071e3] shadow-md shadow-blue-900/20">
+          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 pt-3 pb-2">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
+              <Link
+                to="/"
+                className="shrink-0 text-center lg:text-left no-underline"
+              >
+                <span className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+                  {t('layout.brand')}
+                </span>
               </Link>
 
+              <div className="flex flex-1 justify-center min-w-0">
+                <Input
+                  size="large"
+                  allowClear
+                  value={headerQ}
+                  onChange={(e) => setHeaderQ(e.target.value)}
+                  onPressEnter={submitHeaderSearch}
+                  placeholder={t('layout.header_search_placeholder')}
+                  prefix={
+                    <SearchOutlined
+                      className="text-gray-400 cursor-pointer hover:text-[#0071e3]"
+                      onClick={submitHeaderSearch}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) =>
+                        e.key === 'Enter' && submitHeaderSearch()
+                      }
+                    />
+                  }
+                  className="max-w-2xl w-full rounded-full bg-white border-0 shadow-inner"
+                  styles={{
+                    input: { backgroundColor: 'transparent' },
+                  }}
+                />
+              </div>
+
+              <div className="flex items-center justify-center lg:justify-end gap-5 text-white shrink-0">
+                <Link
+                  to="/cart"
+                  className="relative flex items-center text-blue-100 hover:text-white transition-colors"
+                >
+                  <ShoppingCartOutlined className="text-xl" />
+                  <span className="absolute -top-2 -right-2 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-white text-[10px] font-bold text-[#0071e3]">
+                    0
+                  </span>
+                </Link>
+                <Link
+                  to="/wishlist"
+                  className="text-blue-100 hover:text-white transition-colors"
+                >
+                  <HeartOutlined className="text-xl" />
+                </Link>
+                <button
+                  type="button"
+                  className="text-blue-100 hover:text-white transition-colors"
+                  aria-label="Chat"
+                >
+                  <MessageOutlined className="text-xl" />
+                </button>
+                <Link
+                  to="/account"
+                  className="text-blue-100 hover:text-white transition-colors"
+                >
+                  <UserOutlined className="text-xl" />
+                </Link>
+                <div className="h-5 w-px bg-blue-300/80" />
+                <button
+                  type="button"
+                  onClick={toggleLanguage}
+                  className="text-xs font-bold uppercase text-white hover:text-blue-100 w-7"
+                >
+                  {i18n.language === 'vi' ? 'VI' : 'EN'}
+                </button>
               <div className="hidden md:flex gap-6 items-center text-[12px] font-bold uppercase tracking-widest text-blue-50">
                 <Link className="transition-colors hover:text-white" to="/search">{t('nav.shop')}</Link>
                 <Link className="transition-colors hover:text-white" to="/mac">{t('nav.mac')}</Link>
@@ -68,22 +142,29 @@ function App() {
               </div>
             </div>
 
-            <div className="flex gap-5 items-center justify-end text-blue-100">
-              <Link to="/search" className="transition-colors hover:text-white">
-                <SearchOutlined className="text-[17px]" />
+            <nav
+              className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-3 text-sm font-medium text-blue-100 border-t border-white/10 mt-2"
+              aria-label="Main"
+            >
+              <Link className="hover:text-white transition-colors" to="/products">
+                {t('nav.shop')}
               </Link>
-              <Link to="/wishlist" className="transition-colors hover:text-white">
-                <HeartOutlined className="text-[17px]" />
-              </Link>
+              <Link className="hover:text-white transition-colors" to="/search">
+                {t('nav.collections')}
               <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-white">
                 <UserOutlined className="text-[17px]" />
               </Link>
-              <Link to="/cart" className="transition-colors hover:text-white flex items-center relative group">
-                <ShoppingCartOutlined className="text-[17px]" />
-                <span className="absolute -top-2 -right-2 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[9px] font-bold text-[#0071e3]">
-                  0
-                </span>
+              <Link className="hover:text-white transition-colors" to="/blog">
+                {t('nav.blog')}
               </Link>
+              <span className="hover:text-white transition-colors cursor-default">
+                {t('nav.contact')}
+              </span>
+              <span className="hover:text-white transition-colors cursor-default">
+                {t('nav.about')}
+              </span>
+            </nav>
+          </div>
 
               <div className="h-4 w-px bg-blue-300 ml-1" />
 
@@ -101,7 +182,9 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/products" element={<ProductListPage />} />
             <Route path="/search" element={<SearchResultsPage />} />
+            <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/login" element={<LoginPage />} />
