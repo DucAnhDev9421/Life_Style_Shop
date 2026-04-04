@@ -48,11 +48,25 @@
   "search": {
     "breadcrumb": "Home / Search",
     "showing": "Showing {{count}} results",
+    "query_placeholder": "Search by name or tagline",
+    "no_results": "No products match your filters. Try adjusting search or filters.",
     "filters": "Filters",
     "sort_by": "Sort by:",
     "categories": "Categories",
     "price_range": "Price Range",
     "features": "Features",
+    "category_labels": {
+      "mac": "Mac ({{count}})",
+      "ipad": "iPad ({{count}})",
+      "audio": "Audio ({{count}})",
+      "accessories": "Accessories ({{count}})"
+    },
+    "feature_labels": {
+      "noise_cancellation": "Noise Cancellation",
+      "wireless_charging": "Wireless Charging",
+      "water_resistant": "Water Resistant",
+      "m_series": "M-Series Chip"
+    },
     "sort_options": {
       "featured": "Featured",
       "newest": "Newest Arrivals",

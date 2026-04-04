@@ -48,11 +48,25 @@
   "search": {
     "breadcrumb": "Trang chủ / Tìm kiếm",
     "showing": "Hiển thị {{count}} kết quả",
+    "query_placeholder": "Tìm theo tên hoặc mô tả ngắn",
+    "no_results": "Không có sản phẩm phù hợp. Hãy thử đổi từ khóa hoặc bộ lọc.",
     "filters": "Bộ lọc",
     "sort_by": "Sắp xếp theo:",
     "categories": "Danh mục",
     "price_range": "Khoảng giá",
     "features": "Tính năng",
+    "category_labels": {
+      "mac": "Mac ({{count}})",
+      "ipad": "iPad ({{count}})",
+      "audio": "Âm thanh ({{count}})",
+      "accessories": "Phụ kiện ({{count}})"
+    },
+    "feature_labels": {
+      "noise_cancellation": "Chống ồn chủ động",
+      "wireless_charging": "Sạc không dây",
+      "water_resistant": "Chống nước",
+      "m_series": "Chip M-Series"
+    },
     "sort_options": {
       "featured": "Nổi bật",
       "newest": "Mới nhất",
