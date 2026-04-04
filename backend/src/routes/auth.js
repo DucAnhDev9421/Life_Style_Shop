@@ -9,5 +9,4 @@ router.post('/login', authController.login)
 router.post('/refresh', authController.refresh)
 router.post('/logout', requireAuth, authController.logout)
 router.get('/verify', requireAuth, authController.verify)
-
 module.exports = router

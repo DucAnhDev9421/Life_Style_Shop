@@ -8,6 +8,8 @@ const {
 } = require('../validators/auth')
 const AppError = require('../utils/AppError')
 
+
+
 async function register(req, res, next) {
   try {
     const body = registerSchema.parse(req.body)

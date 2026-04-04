@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const { getJwtSecret } = require('../config/jwt')
 const AppError = require('../utils/AppError')
 
+
 function requireAuth(req, _res, next) {
   const header = req.headers.authorization
   if (!header || !header.startsWith('Bearer ')) {

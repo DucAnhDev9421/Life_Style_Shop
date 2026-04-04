@@ -7,7 +7,6 @@ function getJwtSecret() {
   }
   return secret || 'dev-only-unsafe-jwt-secret-change-me'
 }
-
 function getAccessTokenExpiresIn() {
   return process.env.JWT_EXPIRE || '15m'
 }

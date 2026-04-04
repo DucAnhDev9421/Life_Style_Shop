@@ -8,6 +8,7 @@ function generateRefreshToken() {
   return crypto.randomBytes(48).toString('base64url')
 }
 
+
 module.exports = {
   hashRefreshToken,
   generateRefreshToken,

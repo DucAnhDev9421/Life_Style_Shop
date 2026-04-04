@@ -9,6 +9,7 @@ async function getMe(req, res, next) {
   }
 }
 
+
 async function updateMe(req, res, next) {
   try {
     const { fullName, phone } = req.body

@@ -7,5 +7,4 @@ async function connectDatabase() {
   }
   await mongoose.connect(uri)
 }
-
 module.exports = connectDatabase

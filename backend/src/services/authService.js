@@ -7,6 +7,7 @@ const { hashRefreshToken, generateRefreshToken } = require('../utils/token')
 
 const BCRYPT_ROUNDS = 12
 
+
 function toPublicUser(doc) {
   return {
     id: doc._id.toString(),

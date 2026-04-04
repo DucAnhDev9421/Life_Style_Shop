@@ -9,6 +9,7 @@ exports.getUserById = async (userId) => {
   return user
 }
 
+
 exports.updateUser = async (userId, data) => {
   const updateData = {};
   if (data.fullName !== undefined) updateData.fullName = data.fullName;
