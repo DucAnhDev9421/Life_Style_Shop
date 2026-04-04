@@ -5,94 +5,58 @@ import SearchResultsPage from './pages/SearchResultsPage'
 import BlogPage from './pages/BlogPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import ProfilePage from './pages/ProfilePage'
 import { ConfigProvider } from 'antd'
-import { 
-  UserOutlined, 
-  ShoppingCartOutlined, 
-  HeartOutlined,
-  SearchOutlined
-} from '@ant-design/icons'
+import { UserOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   const { t, i18n } = useTranslation()
   const user = localStorage.getItem('user');
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'vi' : 'en'
-    i18n.changeLanguage(newLang)
-  }
-
   return (
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#0071e3', // Tech blue
+          colorPrimary: '#0E5E76', // Teal Theme
           colorBgBase: '#ffffff',
           fontFamily: 'Inter, -apple-system, sans-serif',
-          borderRadius: 8, // Smooth rounded corners for tech
+          borderRadius: 8,
         },
-        components: {
-          Button: {
-            controlHeightLG: 44,
-            borderRadiusLG: 22, // Pill shaped buttons
-            primaryShadow: '0 4px 14px 0 rgba(0,113,227,0.39)',
-          },
-          Input: {
-            controlHeightLG: 44,
-            borderRadiusLG: 8,
-          }
-        }
       }}
     >
-      <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] pb-10">
-        {/* Sleek ocean blue tech header */}
-        <header className="sticky top-0 z-50 bg-[#0071e3] shadow-lg shadow-blue-500/20 transition-all duration-300">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-14">
-            <div className="flex items-center gap-10">
+      <div className="min-h-screen bg-[#f8f9fa] text-[#1d1d1f] font-sans pb-10">
+        <Toaster position="top-center" />
+        {/* Header matching the design */}
+        <header className="sticky top-0 z-50 bg-white border-b border-gray-100 transition-all duration-300">
+          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-20">
+            <div className="flex items-center gap-12 text-[#0E5E76]">
               <Link to="/" className="flex items-center">
-                <h1 className="text-lg font-bold tracking-tight text-white inline-flex items-center gap-2">
-                  <div className="w-5 h-5 bg-white rounded-sm flex items-center justify-center">
-                    <div className="w-2 h-2 bg-[#0071e3] rounded-full animate-pulse" />
-                  </div>
-                  LIFESTYLE TECH
+                <h1 className="text-xl font-extrabold uppercase leading-tight w-24">
+                  LIFESTYLE SHOPE
                 </h1>
               </Link>
               
-              <div className="hidden md:flex gap-6 items-center text-[12px] font-bold uppercase tracking-widest text-blue-50">
-                <Link className="transition-colors hover:text-white" to="/search">{t('nav.shop')}</Link>
-                <Link className="transition-colors hover:text-white" to="/mac">{t('nav.mac')}</Link>
-                <Link className="transition-colors hover:text-white" to="/ipad">{t('nav.ipad')}</Link>
-                <Link className="transition-colors hover:text-white" to="/blog">{t('nav.newsroom')}</Link>
+              <div className="hidden md:flex gap-8 items-center text-sm font-semibold text-gray-600">
+                <Link className="hover:text-[#0E5E76] transition-colors" to="/search">Shop All</Link>
+                <Link className="hover:text-[#0E5E76] transition-colors" to="/equipment">Equipment</Link>
+                <Link className="hover:text-[#0E5E76] transition-colors" to="/apparel">Apparel</Link>
+                <Link className="hover:text-[#0E5E76] transition-colors" to="/wellness">Wellness</Link>
+                <Link className="hover:text-[#0E5E76] transition-colors" to="/blog">Journal</Link>
               </div>
             </div>
 
-            <div className="flex gap-5 items-center justify-end text-blue-100">
-              <Link to="/search" className="transition-colors hover:text-white">
-                <SearchOutlined className="text-[17px]" />
-              </Link>
-              <Link to="/wishlist" className="transition-colors hover:text-white">
-                <HeartOutlined className="text-[17px]" />
-              </Link>
-              <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-white">
-                <UserOutlined className="text-[17px]" />
-              </Link>
-              <Link to="/cart" className="transition-colors hover:text-white flex items-center relative group">
-                <ShoppingCartOutlined className="text-[17px]" />
-                <span className="absolute -top-2 -right-2 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[9px] font-bold text-[#0071e3]">
-                  0
-                </span>
+            <div className="flex gap-6 items-center justify-end text-gray-600">
+              <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-[#0E5E76]">
+                <UserOutlined className="text-lg" />
               </Link>
               
-              <div className="h-4 w-px bg-blue-300 ml-1" />
-              
-              {/* Language Switcher */}
-              <button 
-                onClick={toggleLanguage}
-                className="text-xs font-bold text-white uppercase hover:text-blue-200 transition-colors cursor-pointer w-6"
-              >
-                {i18n.language === 'vi' ? 'VI' : 'EN'}
-              </button>
+              <Link to="/cart">
+                <button className="bg-[#0E5E76] text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-[#0b4d62] transition-colors shadow-sm">
+                  Cart
+                </button>
+              </Link>
             </div>
           </nav>
         </header>
@@ -104,6 +68,7 @@ function App() {
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/account" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

@@ -1,172 +1,160 @@
 import { useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined, IdcardOutlined, RightOutlined } from '@ant-design/icons';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { authApi } from '../services/authApi';
-import { useTranslation } from 'react-i18next';
+import { authService } from '../services/authService';
+import toast from 'react-hot-toast';
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  
+  const password = watch("password", "");
 
-  const onFinish = async (values) => {
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await authApi.register({
-        email: values.email,
-        password: values.password,
-        fullName: values.fullName,
+      const response = await authService.register({
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
       });
 
-      if (response.success) {
+      if (response && response.success) {
         localStorage.setItem('token', response.data.accessToken);
         if (response.data.refreshToken) {
           localStorage.setItem('refreshToken', response.data.refreshToken);
         }
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        message.success('Registration successful! Welcome!');
+        toast.success('Registration successful! Welcome!');
         navigate('/');
+      } else {
+        toast.error('Registration failed. Please try again.');
       }
     } catch (error) {
       console.error(error);
-      message.error(error.response?.data?.message || 'Registration failed. Please try again.');
+      toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-56px)] bg-[#fbfbfd]">
-      
-      <div className="hidden lg:relative lg:block lg:flex-1 bg-[#000000]">
-        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-          <div className="absolute bg-gradient-to-tr from-[#0071e3] to-[#42a1f5] w-[600px] h-[600px] rounded-full blur-[150px] opacity-30 top-1/4 -left-10 animate-pulse"></div>
-          
-          <img
-            className="w-full h-full object-cover opacity-80"
-            src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            alt="Mac Setup"
-          />
-          <div className="absolute top-12 left-12 right-12 z-10 text-white">
-            <div className="w-12 h-12 bg-white/10 backdrop-blur-md flex items-center justify-center rounded-2xl mb-6 border border-white/20">
-               <div className="w-4 h-4 bg-[#0071e3] rounded-full" />
-            </div>
-            <h1 className="text-4xl font-bold tracking-tight mb-4 drop-shadow-md">Join the lifestyle.</h1>
-            <p className="text-lg opacity-80 drop-shadow-sm max-w-md">Create an account to track orders, manage your wishlist, and check out faster.</p>
-          </div>
+    <div className="flex flex-col items-center justify-center pt-16 pb-24 px-4 sm:px-6 lg:px-8 w-full bg-[#f8f9fa]">
+      <div className="w-full max-w-md animate-fade-in-up">
+        <div className="text-center md:text-left mb-8">
+          <h2 className="text-[32px] font-bold text-[#0E5E76] mb-2 tracking-tight">
+            Create account
+          </h2>
+          <p className="text-gray-500 font-medium">
+            Start your journey with Ethereal Athlete today.
+          </p>
         </div>
-      </div>
 
-      <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 w-full">
-        <div className="mx-auto w-full max-w-sm lg:w-96 animate-fade-in-up">
-          <div className="text-center lg:text-left">
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#1d1d1f]">
-              Create account
-            </h2>
-            <p className="mt-2 text-sm text-[#86868b]">
-              Already have an account?{' '}
-              <Link to="/login" className="font-semibold text-[#0071e3] hover:text-[#0077ED] transition-colors">
-                Sign in <RightOutlined className="text-[10px] ml-1" />
-              </Link>
-            </p>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          {/* Full Name */}
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+              Full Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              {...register('fullName', { required: 'Full name is required' })}
+              className={`w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-[#0E5E76] focus:bg-white transition-colors outline-none ${errors.fullName ? 'ring-2 ring-red-400' : ''}`}
+            />
+            {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
           </div>
 
-          <div className="mt-10">
-            <div className="bg-white px-6 py-8 shadow-[0_4px_24px_rgba(0,0,0,0.06)] sm:rounded-2xl sm:px-10 border border-[#e5e5ea]">
-              <Form
-                name="register"
-                layout="vertical"
-                onFinish={onFinish}
-                size="large"
-                requiredMark={false}
-              >
-                <Form.Item
-                  name="fullName"
-                  label={<span className="text-[#1d1d1f] font-medium text-sm">Full Name</span>}
-                  rules={[{ required: true, message: 'Please input your full name!' }]}
-                >
-                  <Input 
-                    prefix={<IdcardOutlined className="text-[#86868b]" />} 
-                    placeholder="Steve Jobs" 
-                    className="hover:border-[#0071e3] focus:border-[#0071e3]"
-                  />
-                </Form.Item>
+          {/* Email Address */}
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              placeholder="name@example.com"
+              {...register('email', { 
+                required: 'Email is required',
+                pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' }
+              })}
+              className={`w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-[#0E5E76] focus:bg-white transition-colors outline-none ${errors.email ? 'ring-2 ring-red-400' : ''}`}
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          </div>
 
-                <Form.Item
-                  name="email"
-                  label={<span className="text-[#1d1d1f] font-medium text-sm">Email</span>}
-                  rules={[
-                    { required: true, message: 'Please input your email!' },
-                    { type: 'email', message: 'Please enter a valid email!' }
-                  ]}
-                >
-                  <Input 
-                    prefix={<MailOutlined className="text-[#86868b]" />} 
-                    placeholder="steve@example.com" 
-                    className="hover:border-[#0071e3] focus:border-[#0071e3]"
-                  />
-                </Form.Item>
+          <div className="flex gap-4">
+            {/* Password */}
+            <div className="flex-1">
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                {...register('password', { 
+                  required: 'Password is required',
+                  minLength: { value: 6, message: 'Minimum 6 characters' }
+                })}
+                className={`w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-[#0E5E76] focus:bg-white transition-colors outline-none ${errors.password ? 'ring-2 ring-red-400' : ''}`}
+              />
+              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+            </div>
 
-                <Form.Item
-                  name="password"
-                  label={<span className="text-[#1d1d1f] font-medium text-sm">Password</span>}
-                  rules={[
-                    { required: true, message: 'Please input your password!' },
-                    { min: 8, message: 'Password must be at least 8 characters long!' }
-                  ]}
-                  hasFeedback
-                >
-                  <Input.Password 
-                    prefix={<LockOutlined className="text-[#86868b]" />}
-                    placeholder="Minimum 8 characters" 
-                    className="hover:border-[#0071e3] focus:border-[#0071e3]"
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="confirm"
-                  label={<span className="text-[#1d1d1f] font-medium text-sm">Confirm Password</span>}
-                  dependencies={['password']}
-                  hasFeedback
-                  rules={[
-                    { required: true, message: 'Please confirm your password!' },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue('password') === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password 
-                    prefix={<LockOutlined className="text-[#86868b]" />}
-                    placeholder="Confirm your password" 
-                    className="hover:border-[#0071e3] focus:border-[#0071e3]"
-                  />
-                </Form.Item>
-
-                <Form.Item className="mb-0 mt-6">
-                  <Button 
-                    type="primary" 
-                    htmlType="submit" 
-                    className="w-full h-11 bg-[#1d1d1f] hover:bg-[#000000] border-none font-semibold transition-all duration-300"
-                    loading={loading}
-                  >
-                    {!loading && <span>Create Account</span>}
-                  </Button>
-                </Form.Item>
-                <div className="mt-4 text-center">
-                  <p className="text-[11px] text-[#86868b] leading-tight">
-                    By creating an account, you agree to our <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
-                  </p>
-                </div>
-              </Form>
+            {/* Confirm Password */}
+            <div className="flex-1">
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                Confirm
+              </label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                {...register('confirmPassword', { 
+                  required: 'Please confirm password',
+                  validate: value => value === password || 'Passwords do not match'
+                })}
+                className={`w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:ring-2 focus:ring-[#0E5E76] focus:bg-white transition-colors outline-none ${errors.confirmPassword ? 'ring-2 ring-red-400' : ''}`}
+              />
+              {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
             </div>
           </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#0E5E76] text-white font-semibold py-3.5 rounded-full hover:bg-[#0b4d62] transition-colors mt-4 flex justify-center items-center h-[52px]"
+          >
+            {loading ? (
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            ) : (
+              <div className="flex flex-col items-center">
+                <span>Create</span>
+                <span>Account</span>
+              </div>
+            )}
+          </button>
+        </form>
+
+        <div className="mt-8 flex items-center">
+          <div className="flex-grow border-t border-gray-200"></div>
+          <span className="mx-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Or join with</span>
+          <div className="flex-grow border-t border-gray-200"></div>
         </div>
+
+        <button className="w-full mt-6 bg-white border border-gray-200 text-gray-700 font-semibold py-3.5 rounded-full hover:bg-gray-50 transition-colors flex items-center justify-center gap-3">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" className="w-5 h-5" />
+          <span>Google</span>
+        </button>
+
+        <p className="mt-8 text-center text-sm text-gray-600">
+          Already part of the movement?{' '}
+          <Link to="/login" className="font-bold text-[#0E5E76] hover:underline">
+            Log In
+          </Link>
+        </p>
       </div>
     </div>
   );

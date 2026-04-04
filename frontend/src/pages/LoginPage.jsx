@@ -1,130 +1,124 @@
 import { useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined, RightOutlined } from '@ant-design/icons';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { authApi } from '../services/authApi';
-import { useTranslation } from 'react-i18next';
+import { authService } from '../services/authService';
+import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onFinish = async (values) => {
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await authApi.login(values);
-      if (response.success) {
+      const response = await authService.login(data);
+
+      if (response && response.success) {
         localStorage.setItem('token', response.data.accessToken);
         if (response.data.refreshToken) {
           localStorage.setItem('refreshToken', response.data.refreshToken);
         }
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        message.success('Welcome back!');
+        toast.success('Welcome back!');
         navigate('/');
+      } else {
+        toast.error('Login failed. Please try again.');
       }
     } catch (error) {
       console.error(error);
-      message.error(error.response?.data?.message || 'Login failed. Please try again.');
+      toast.error(error.response?.data?.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-56px)] bg-[#fbfbfd]">
-      <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 w-full">
-        <div className="mx-auto w-full max-w-sm lg:w-96 animate-fade-in-up">
-          <div className="text-center lg:text-left">
-            <h2 className="mt-8 text-3xl font-bold tracking-tight text-[#1d1d1f]">
-              Sign in to your account
-            </h2>
-            <p className="mt-2 text-sm text-[#86868b]">
-              Don't have an account?{' '}
-              <Link to="/register" className="font-semibold text-[#0071e3] hover:text-[#0077ED] transition-colors">
-                Sign up <RightOutlined className="text-[10px] ml-1" />
-              </Link>
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <div className="bg-white px-6 py-8 shadow-[0_4px_24px_rgba(0,0,0,0.06)] sm:rounded-2xl sm:px-10 border border-[#e5e5ea]">
-              <Form
-                name="login"
-                layout="vertical"
-                onFinish={onFinish}
-                size="large"
-                requiredMark={false}
-              >
-                <Form.Item
-                  name="email"
-                  label={<span className="text-[#1d1d1f] font-medium text-sm">Email address</span>}
-                  rules={[
-                    { required: true, message: 'Please input your email!' },
-                    { type: 'email', message: 'Please enter a valid email!' }
-                  ]}
-                >
-                  <Input 
-                    prefix={<UserOutlined className="text-[#86868b]" />} 
-                    placeholder="Enter your email" 
-                    className="hover:border-[#0071e3] focus:border-[#0071e3]"
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="password"
-                  label={<span className="text-[#1d1d1f] font-medium text-sm">Password</span>}
-                  rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                  <Input.Password 
-                    prefix={<LockOutlined className="text-[#86868b]" />}
-                    placeholder="Enter your password" 
-                    className="hover:border-[#0071e3] focus:border-[#0071e3]"
-                  />
-                </Form.Item>
-
-                <div className="flex items-center justify-between mb-6">
-                  <div className="text-sm">
-                    <a href="#" className="font-semibold text-[#0071e3] hover:text-[#0077ED]">
-                      Forgot password?
-                    </a>
-                  </div>
-                </div>
-
-                <Form.Item className="mb-0">
-                  <Button 
-                    type="primary" 
-                    htmlType="submit" 
-                    className="w-full h-11 bg-[#0071e3] hover:bg-[#0077ED] border-none font-semibold group flex items-center justify-center transition-all duration-300"
-                    loading={loading}
-                  >
-                    {!loading && <span>Sign in</span>}
-                  </Button>
-                </Form.Item>
-              </Form>
-            </div>
-          </div>
+    <div className="flex flex-col items-center justify-center pt-16 pb-24 px-4 sm:px-6 lg:px-8 w-full bg-[#f8f9fa]">
+      <div className="w-full max-w-md animate-fade-in-up">
+        
+        <div className="mb-8">
+          <p className="text-[#0E5E76] font-bold text-[17px] mb-2 tracking-tight">Ethereal Athlete</p>
+          <h2 className="text-[40px] font-bold text-[#1d1d1f] leading-tight tracking-tight mb-2">
+            Welcome Back
+          </h2>
+          <p className="text-gray-500 font-medium text-[15px]">
+            Continue your journey toward precision and peace.
+          </p>
         </div>
-      </div>
-      <div className="hidden lg:relative lg:block lg:flex-1 bg-[#f5f5f7]">
-        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-          {/* Abstract aesthetic shapes for modern look */}
-          <div className="absolute bg-gradient-to-tr from-[#0071e3] to-[#42a1f5] w-96 h-96 rounded-full blur-[100px] opacity-20 -top-20 -left-20 animate-pulse"></div>
-          <div className="absolute bg-gradient-to-bl from-purple-400 to-[#0071e3] w-[500px] h-[500px] rounded-full blur-[120px] opacity-10 bottom-10 right-10"></div>
-          
-          <img
-            // Apple-style aesthetic image. 
-            className="w-full h-full object-cover opacity-90 transition-transform duration-[10s] hover:scale-105"
-            src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            alt="Tech Aesthetic"
-          />
-          <div className="absolute bottom-12 left-12 right-12 z-10">
-            <div className="backdrop-blur-xl bg-white/30 p-8 rounded-3xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
-              <h3 className="text-2xl font-bold text-white mb-2 shadow-sm drop-shadow-md">Welcome to LifeStyle Tech</h3>
-              <p className="text-white/90 font-medium drop-shadow-sm">Discover the most advanced equipment with unparalleled elegance.</p>
-            </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          {/* Email Address */}
+          <div>
+            <label className="block text-[13px] font-bold text-gray-600 mb-2">
+              Email address
+            </label>
+            <input
+              type="email"
+              placeholder="name@example.com"
+              {...register('email', { 
+                required: 'Email is required',
+                pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' }
+              })}
+              className={`w-full px-4 py-3.5 rounded-xl bg-gray-100/80 border-none focus:ring-2 focus:ring-[#0E5E76] focus:bg-white transition-colors outline-none text-[15px] ${errors.email ? 'ring-2 ring-red-400' : ''}`}
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1.5 ml-1">{errors.email.message}</p>}
           </div>
+
+          {/* Password */}
+          <div>
+            <div className="flex justify-between items-end mb-2">
+              <label className="block text-[13px] font-bold text-gray-600 w-16">
+                Password
+              </label>
+              <a href="#" className="text-[13px] font-bold text-[#0E5E76] hover:underline whitespace-nowrap">
+                Forgot Password?
+              </a>
+            </div>
+            <input
+              type="password"
+              placeholder="••••••••"
+              {...register('password', { 
+                required: 'Password is required'
+              })}
+              className={`w-full px-4 py-3.5 rounded-xl bg-gray-100/80 border-none focus:ring-2 focus:ring-[#0E5E76] focus:bg-white transition-colors outline-none text-[15px] tracking-widest placeholder:tracking-normal ${errors.password ? 'ring-2 ring-red-400' : ''}`}
+            />
+            {errors.password && <p className="text-red-500 text-xs mt-1.5 ml-1">{errors.password.message}</p>}
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#0E5E76] text-white font-semibold text-[15px] py-4 rounded-full hover:bg-[#0b4d62] transition-colors mt-6 h-[54px] flex justify-center items-center shadow-md shadow-[#0E5E76]/20"
+          >
+            {loading ? (
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            ) : (
+              <span>Login</span>
+            )}
+          </button>
+        </form>
+
+        <div className="mt-8 flex items-center">
+          <div className="flex-grow border-t border-gray-200"></div>
+          <span className="mx-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Or continue with</span>
+          <div className="flex-grow border-t border-gray-200"></div>
         </div>
+
+        <button className="w-full mt-6 bg-white border border-gray-100 shadow-sm text-gray-700 font-semibold text-[15px] py-3.5 rounded-full hover:bg-gray-50 transition-colors flex items-center justify-center gap-3">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" className="w-[18px] h-[18px]" />
+          <span>Google</span>
+        </button>
+
+        <p className="mt-8 text-center text-[14px] text-gray-500 font-medium">
+          Don't have an account?{' '}
+          <Link to="/register" className="font-bold text-[#0E5E76] hover:underline">
+            Join the collective
+          </Link>
+        </p>
       </div>
     </div>
   );
