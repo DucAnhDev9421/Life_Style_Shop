@@ -8,6 +8,9 @@ import WishlistPage from './pages/WishlistPage'
 import BlogPage from './pages/BlogPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import { ConfigProvider, Input } from 'antd'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import { ConfigProvider } from 'antd'
 import {
   UserOutlined,
   ShoppingCartOutlined,
@@ -21,6 +24,7 @@ function App() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const [headerQ, setHeaderQ] = useState('')
+  const user = localStorage.getItem('user');
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'vi' : 'en'
@@ -130,6 +134,11 @@ function App() {
                 >
                   {i18n.language === 'vi' ? 'VI' : 'EN'}
                 </button>
+              <div className="hidden md:flex gap-6 items-center text-[12px] font-bold uppercase tracking-widest text-blue-50">
+                <Link className="transition-colors hover:text-white" to="/search">{t('nav.shop')}</Link>
+                <Link className="transition-colors hover:text-white" to="/mac">{t('nav.mac')}</Link>
+                <Link className="transition-colors hover:text-white" to="/ipad">{t('nav.ipad')}</Link>
+                <Link className="transition-colors hover:text-white" to="/blog">{t('nav.newsroom')}</Link>
               </div>
             </div>
 
@@ -142,6 +151,8 @@ function App() {
               </Link>
               <Link className="hover:text-white transition-colors" to="/search">
                 {t('nav.collections')}
+              <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-white">
+                <UserOutlined className="text-[17px]" />
               </Link>
               <Link className="hover:text-white transition-colors" to="/blog">
                 {t('nav.blog')}
@@ -154,6 +165,18 @@ function App() {
               </span>
             </nav>
           </div>
+
+              <div className="h-4 w-px bg-blue-300 ml-1" />
+
+              {/* Language Switcher */}
+              <button
+                onClick={toggleLanguage}
+                className="text-xs font-bold text-white uppercase hover:text-blue-200 transition-colors cursor-pointer w-6"
+              >
+                {i18n.language === 'vi' ? 'VI' : 'EN'}
+              </button>
+            </div>
+          </nav>
         </header>
 
         <main>
@@ -164,6 +187,8 @@ function App() {
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
