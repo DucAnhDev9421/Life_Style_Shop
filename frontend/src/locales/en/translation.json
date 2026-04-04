@@ -1,9 +1,17 @@
 {
+  "layout": {
+    "brand": "LifeStyle Shop",
+    "header_search_placeholder": "Search products..."
+  },
   "nav": {
     "shop": "Shop",
     "mac": "Mac",
     "ipad": "iPad",
-    "newsroom": "Newsroom"
+    "newsroom": "Newsroom",
+    "collections": "Collections",
+    "blog": "Blog",
+    "contact": "Contact",
+    "about": "About us"
   },
   "hero": {
     "subtitle": "The Next Generation",
@@ -60,7 +68,19 @@
       "ports": "Ports",
       "display_watch": "Display",
       "water": "Water resistance",
-      "sensors": "Sensors"
+      "sensors": "Sensors",
+      "material": "Material",
+      "weight_class": "Weight / size",
+      "sole": "Outsole",
+      "upper": "Upper",
+      "capacity": "Capacity",
+      "fit": "Fit",
+      "lens": "Lens",
+      "strap": "Strap",
+      "height": "Height",
+      "volume": "Volume",
+      "capacity_ml": "Volume",
+      "closure": "Closure"
     }
   },
   "values": {
@@ -119,6 +139,106 @@
     "read_full": "Read full article",
     "load_more": "Load More Articles",
     "read_time": "{{count}} min read"
+  },
+  "listing": {
+    "product_list_title": "Product catalog",
+    "wishlist_title": "Wishlist",
+    "showing_count": "Showing {{count}} products",
+    "empty_category": "No products in this category.",
+    "wishlist_empty": "Your wishlist is empty.",
+    "wishlist_browse": "Browse products",
+    "remove_wishlist": "Remove",
+    "price_line": "Price: {{value}}",
+    "heart_toggle_aria": "Add or remove from wishlist",
+    "catalog_items": {
+      "1": {
+        "name": "Twins boxing gloves",
+        "size": "Sizes: 10, 12, 14 OZ",
+        "detail": "Synthetic leather, layered foam padding, secure wrist strap — ideal for boxing and Muay Thai training.",
+        "spec_material": "PU leather, foam lining",
+        "spec_weight": "10 / 12 / 14 OZ"
+      },
+      "2": {
+        "name": "Pro Runner shoes",
+        "size": "EU 39–45",
+        "detail": "Responsive midsole, durable rubber outsole, breathable upper for road runs or HIIT sessions.",
+        "spec_sole": "Non-slip rubber",
+        "spec_upper": "Engineered mesh"
+      },
+      "3": {
+        "name": "2-person camping tent",
+        "size": "210 × 130 × 110 cm",
+        "detail": "Light alloy poles, water-resistant flysheet, mesh door — compact for weekend trips.",
+        "spec_cap": "2 people",
+        "spec_mat": "190T polyester, taped seams"
+      },
+      "4": {
+        "name": "SportHeat insulated jacket",
+        "size": "S–XXL",
+        "detail": "Brushed inner layer, light wind-resistant shell — warm-ups and cool-downs outdoors.",
+        "spec_mat": "Polyester / spandex",
+        "spec_fit": "Regular fit"
+      },
+      "5": {
+        "name": "Mirror Pro swim goggles",
+        "size": "Adjustable bridge",
+        "detail": "Anti-fog coated lenses, soft silicone gasket, split strap — pool or open water.",
+        "spec_lens": "Mirrored PC",
+        "spec_strap": "Silicone, quick-adjust"
+      },
+      "6": {
+        "name": "Heavy punching bag",
+        "size": "120 cm height / ~35 kg filled",
+        "detail": "Tough canvas shell, foam fill, hanging chain included — home gym or garage setup.",
+        "spec_mat": "Canvas shell, foam core",
+        "spec_height": "120 cm"
+      },
+      "7": {
+        "name": "Trail running waist pack",
+        "size": "Adjustable belt",
+        "detail": "Fits a 500 ml bottle, zip pocket for phone — trail runs and long hikes.",
+        "spec_mat": "Water-resistant nylon",
+        "spec_vol": "2 pockets + bottle slot"
+      },
+      "8": {
+        "name": "Sports bottle 750 ml",
+        "size": "750 ml",
+        "detail": "One-hand flip lid, Tritan body — gym, cycling, daily hydration.",
+        "spec_mat": "BPA-free Tritan",
+        "spec_ml": "750 ml"
+      },
+      "9": {
+        "name": "MMA training gloves",
+        "size": "M / L",
+        "detail": "Open fingers, padded knuckles — grappling, MMA, or light partner drills.",
+        "spec_mat": "Synthetic leather, EVA foam",
+        "spec_close": "Hook-and-loop wrist"
+      }
+    },
+    "sport_filters": {
+      "all": "All",
+      "picnic": "Outdoor & picnic",
+      "running": "Running & walking",
+      "warm": "Warm layers",
+      "swim": "Swim",
+      "boxing": "Boxing & Muay Thai"
+    },
+    "footer_cols": {
+      "support": "Customer support",
+      "about": "About LifeStyle Shop",
+      "offers": "Offers"
+    },
+    "footer_links": {
+      "order_guide": "How to order",
+      "cs_contact": "Contact support",
+      "returns": "Returns & warranty",
+      "who": "Who is LifeStyle Shop?",
+      "recruit": "Careers",
+      "sports_blog": "Sports blog",
+      "points": "Loyalty program",
+      "voucher": "Discount vouchers",
+      "fanpage": "Follow our page for 10% off"
+    }
   },
   "footer": {
     "store": "Shop",

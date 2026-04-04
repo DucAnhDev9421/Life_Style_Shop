@@ -22,10 +22,10 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="border-b border-gray-300 pb-8 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <h2 className="text-sm font-bold text-[#1d1d1f] flex items-center gap-2">
-              <div className="w-3 h-3 bg-[#0071e3] rounded-sm" /> LIFESTYLE TECH
+              <div className="w-3 h-3 bg-[#0071e3] rounded-sm" /> {t('layout.brand')}
             </h2>
             <div className="flex gap-6 text-xs text-gray-600 font-medium tracking-wide">
-              <Link to="/search" className="hover:text-[#0071e3] transition-colors">{t('footer.store')}</Link>
+              <Link to="/products" className="hover:text-[#0071e3] transition-colors">{t('footer.store')}</Link>
               <Link to="/mac" className="hover:text-[#0071e3] transition-colors">{t('footer.mac')}</Link>
               <Link to="/ipad" className="hover:text-[#0071e3] transition-colors">{t('footer.ipad')}</Link>
               <Link to="/blog" className="hover:text-[#0071e3] transition-colors">{t('footer.newsroom')}</Link>
