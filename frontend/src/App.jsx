@@ -1,27 +1,28 @@
-import { Link, Route, Routes } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import NotFoundPage from './pages/NotFoundPage'
-import SearchResultsPage from './pages/SearchResultsPage'
-import BlogPage from './pages/BlogPage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import ProfilePage from './pages/ProfilePage'
-import { ConfigProvider } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
-import { useTranslation } from 'react-i18next'
-import { Toaster } from 'react-hot-toast'
+import { Link, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import SearchResultsPage from "./pages/SearchResultsPage";
+import BlogPage from "./pages/BlogPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ProfilePage from "./pages/ProfilePage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import { ConfigProvider } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
+import { Toaster } from "react-hot-toast";
 
 function App() {
-  const { t, i18n } = useTranslation()
-  const user = localStorage.getItem('user');
+  const { t, i18n } = useTranslation();
+  const user = localStorage.getItem("user");
 
   return (
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#0E5E76', // Teal Theme
-          colorBgBase: '#ffffff',
-          fontFamily: 'Inter, -apple-system, sans-serif',
+          colorPrimary: "#0E5E76", // Teal Theme
+          colorBgBase: "#ffffff",
+          fontFamily: "Inter, -apple-system, sans-serif",
           borderRadius: 8,
         },
       }}
@@ -37,21 +38,49 @@ function App() {
                   LIFESTYLE SHOPE
                 </h1>
               </Link>
-              
+
               <div className="hidden md:flex gap-8 items-center text-sm font-semibold text-gray-600">
-                <Link className="hover:text-[#0E5E76] transition-colors" to="/search">Shop All</Link>
-                <Link className="hover:text-[#0E5E76] transition-colors" to="/equipment">Equipment</Link>
-                <Link className="hover:text-[#0E5E76] transition-colors" to="/apparel">Apparel</Link>
-                <Link className="hover:text-[#0E5E76] transition-colors" to="/wellness">Wellness</Link>
-                <Link className="hover:text-[#0E5E76] transition-colors" to="/blog">Journal</Link>
+                <Link
+                  className="hover:text-[#0E5E76] transition-colors"
+                  to="/search"
+                >
+                  Shop All
+                </Link>
+                <Link
+                  className="hover:text-[#0E5E76] transition-colors"
+                  to="/equipment"
+                >
+                  Equipment
+                </Link>
+                <Link
+                  className="hover:text-[#0E5E76] transition-colors"
+                  to="/apparel"
+                >
+                  Apparel
+                </Link>
+                <Link
+                  className="hover:text-[#0E5E76] transition-colors"
+                  to="/wellness"
+                >
+                  Wellness
+                </Link>
+                <Link
+                  className="hover:text-[#0E5E76] transition-colors"
+                  to="/blog"
+                >
+                  Journal
+                </Link>
               </div>
             </div>
 
             <div className="flex gap-6 items-center justify-end text-gray-600">
-              <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-[#0E5E76]">
+              <Link
+                to={user ? "/account" : "/login"}
+                className="transition-colors hover:text-[#0E5E76]"
+              >
                 <UserOutlined className="text-lg" />
               </Link>
-              
+
               <Link to="/cart">
                 <button className="bg-[#0E5E76] text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-[#0b4d62] transition-colors shadow-sm">
                   Cart
@@ -69,12 +98,13 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/account" element={<ProfilePage />} />
+            <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
       </div>
     </ConfigProvider>
-  )
+  );
 }
 
-export default App
+export default App;

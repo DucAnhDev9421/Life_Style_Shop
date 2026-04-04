@@ -30,6 +30,39 @@
     "buy": "Mua",
     "load_more": "Xem Thêm Sản Phẩm"
   },
+  "productDetail": {
+    "breadcrumb_home": "Trang chủ",
+    "breadcrumb_shop": "Cửa hàng",
+    "gallery_label": "Ảnh sản phẩm",
+    "qty": "Số lượng",
+    "add_cart": "Thêm vào giỏ",
+    "wishlist": "Yêu thích",
+    "shipping": "Miễn phí giao hàng cho đơn từ $50. Có nhận tại cửa hàng được chọn.",
+    "specs_title": "Thông số kỹ thuật",
+    "not_found": "Không tìm thấy sản phẩm",
+    "not_found_hint": "Sản phẩm có thể đã gỡ hoặc đường dẫn không đúng.",
+    "back_shop": "Quay lại cửa hàng",
+    "descriptions": {
+      "1": "Tai nghe chụp tai cao cấp với chống ồn thích ứng, âm thanh không gian và đệm thoáng khí cho cả ngày đeo thoải mái.",
+      "2": "Khung nhôm gia công chính xác, switch xúc giác và lớp phím lập trình được — dành cho người sáng tạo làm việc trong trạng thái flow.",
+      "3": "Màn hình 6K chuẩn tham chiếu với dải động rộng — lý tưởng cho chỉnh màu và sáng tạo đa phương tiện.",
+      "4": "Cảm biến sức khỏe nâng cao, màn hình luôn bật và đồng bộ mượt với cuộc sống số khi di chuyển."
+    },
+    "specs": {
+      "active_noise": "Chống ồn chủ động",
+      "battery": "Pin",
+      "chip": "Chip",
+      "switches": "Switch",
+      "layout": "Bố cục",
+      "connectivity": "Kết nối",
+      "resolution": "Độ phân giải",
+      "brightness": "Độ sáng",
+      "ports": "Cổng",
+      "display_watch": "Màn hình",
+      "water": "Chống nước",
+      "sensors": "Cảm biến"
+    }
+  },
   "values": {
     "delivery_title": "Giao hàng nhanh, miễn phí",
     "delivery_desc": "Hoặc nhận sản phẩm có sẵn tại cửa hàng Apple.",
@@ -48,11 +81,25 @@
   "search": {
     "breadcrumb": "Trang chủ / Tìm kiếm",
     "showing": "Hiển thị {{count}} kết quả",
+    "query_placeholder": "Tìm theo tên hoặc mô tả ngắn",
+    "no_results": "Không có sản phẩm phù hợp. Hãy thử đổi từ khóa hoặc bộ lọc.",
     "filters": "Bộ lọc",
     "sort_by": "Sắp xếp theo:",
     "categories": "Danh mục",
     "price_range": "Khoảng giá",
     "features": "Tính năng",
+    "category_labels": {
+      "mac": "Mac ({{count}})",
+      "ipad": "iPad ({{count}})",
+      "audio": "Âm thanh ({{count}})",
+      "accessories": "Phụ kiện ({{count}})"
+    },
+    "feature_labels": {
+      "noise_cancellation": "Chống ồn chủ động",
+      "wireless_charging": "Sạc không dây",
+      "water_resistant": "Chống nước",
+      "m_series": "Chip M-Series"
+    },
     "sort_options": {
       "featured": "Nổi bật",
       "newest": "Mới nhất",
