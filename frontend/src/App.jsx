@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 import SearchResultsPage from './pages/SearchResultsPage'
 import BlogPage from './pages/BlogPage'
+import ProductDetailPage from './pages/ProductDetailPage'
 import { ConfigProvider } from 'antd'
 import { 
   UserOutlined, 
@@ -99,6 +100,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

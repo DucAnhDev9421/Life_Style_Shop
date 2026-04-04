@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chi tiết sản phẩm — Life Style Shop (demo HTML)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="logo" href="/">LIFESTYLE TECH</a>
+        <nav class="nav" aria-label="Chính">
+          <a href="/search">Cửa hàng</a>
+          <a href="/blog">Tin</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="product-page">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Trang chủ</a>
+        <span>/</span>
+        <a href="/search">Cửa hàng</a>
+        <span>/</span>
+        <span id="breadcrumb-name">Sản phẩm</span>
+      </nav>
+
+      <div class="product-layout">
+        <section class="product-gallery" aria-label="Ảnh sản phẩm">
+          <div class="product-gallery__main">
+            <img id="main-image" src="" alt="" width="800" height="800" />
+          </div>
+          <div class="product-gallery__thumbs" id="thumbs" role="tablist"></div>
+        </section>
+
+        <section class="product-info">
+          <p class="badge" id="badge-new" hidden>Mới</p>
+          <h1 class="product-title" id="product-title"></h1>
+          <p class="product-tagline" id="product-tagline"></p>
+          <p class="product-price" id="product-price"></p>
+          <p class="product-desc" id="product-desc"></p>
+
+          <div class="qty-row">
+            <label for="qty">Số lượng</label>
+            <div class="qty-controls">
+              <button type="button" id="qty-minus" aria-label="Giảm">−</button>
+              <input type="number" id="qty" min="1" max="99" value="1" />
+              <button type="button" id="qty-plus" aria-label="Tăng">+</button>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn btn--primary" id="btn-cart">
+              Thêm vào giỏ
+            </button>
+            <button type="button" class="btn btn--ghost" id="btn-wishlist">
+              Yêu thích
+            </button>
+          </div>
+          <p class="shipping-note">Miễn phí giao hàng cho đơn từ $50.</p>
+
+          <div class="specs">
+            <h2>Thông số kỹ thuật</h2>
+            <dl id="spec-list"></dl>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
