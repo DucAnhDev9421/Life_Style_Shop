@@ -18,7 +18,7 @@ function ProductDetailPage() {
         <h1 className="text-2xl font-bold text-[#1d1d1f]">{t('productDetail.not_found')}</h1>
         <p className="mt-4 text-gray-500">{t('productDetail.not_found_hint')}</p>
         <Link
-          to="/search"
+          to="/products"
           className="mt-8 inline-block rounded-full bg-[#0071e3] px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25"
         >
           {t('productDetail.back_shop')}
@@ -36,11 +36,13 @@ function ProductDetailPage() {
           {t('productDetail.breadcrumb_home')}
         </Link>
         <span className="mx-2">/</span>
-        <Link to="/search" className="hover:text-[#0071e3]">
+        <Link to="/products" className="hover:text-[#0071e3]">
           {t('productDetail.breadcrumb_shop')}
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-[#1d1d1f]">{product.name}</span>
+        <span className="text-[#1d1d1f]">
+          {product.nameKey ? t(product.nameKey) : product.name}
+        </span>
       </nav>
 
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
@@ -48,7 +50,7 @@ function ProductDetailPage() {
           <div className="aspect-square overflow-hidden rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
             <img
               src={mainSrc}
-              alt={product.name}
+              alt={product.nameKey ? t(product.nameKey) : product.name}
               className="h-full w-full object-contain"
             />
           </div>
@@ -81,9 +83,11 @@ function ProductDetailPage() {
             </p>
           )}
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-[#1d1d1f] md:text-4xl">
-            {product.name}
+            {product.nameKey ? t(product.nameKey) : product.name}
           </h1>
-          <p className="mt-2 text-gray-500">{product.tagline}</p>
+          <p className="mt-2 text-gray-500">
+            {product.taglineKey ? t(product.taglineKey) : product.tagline}
+          </p>
           <p className="mt-6 text-2xl font-semibold text-[#1d1d1f]">{product.price}</p>
 
           <p className="mt-6 text-base leading-relaxed text-gray-600">
@@ -129,11 +133,13 @@ function ProductDetailPage() {
             <dl className="mt-4 space-y-3">
               {product.specs.map((row) => (
                 <div
-                  key={row.labelKey}
+                  key={`${row.labelKey}-${row.valueKey || row.value || ''}`}
                   className="flex flex-col gap-1 border-b border-gray-100 pb-3 sm:flex-row sm:justify-between"
                 >
                   <dt className="text-sm text-gray-500">{t(row.labelKey)}</dt>
-                  <dd className="text-sm font-medium text-[#1d1d1f]">{row.value}</dd>
+                  <dd className="text-sm font-medium text-[#1d1d1f]">
+                    {row.valueKey ? t(row.valueKey) : row.value}
+                  </dd>
                 </div>
               ))}
             </dl>

@@ -1,9 +1,17 @@
 {
+  "layout": {
+    "brand": "LifeStyle Shop",
+    "header_search_placeholder": "Tìm kiếm sản phẩm..."
+  },
   "nav": {
     "shop": "Cửa hàng",
     "mac": "Mac",
     "ipad": "iPad",
-    "newsroom": "Tin tức"
+    "newsroom": "Tin tức",
+    "collections": "Bộ sưu tập",
+    "blog": "Blog",
+    "contact": "Liên hệ",
+    "about": "Về chúng tôi"
   },
   "hero": {
     "subtitle": "Thế Hệ Mới Nhất",
@@ -60,7 +68,19 @@
       "ports": "Cổng",
       "display_watch": "Màn hình",
       "water": "Chống nước",
-      "sensors": "Cảm biến"
+      "sensors": "Cảm biến",
+      "material": "Chất liệu",
+      "weight_class": "Khối lượng / size",
+      "sole": "Đế giày",
+      "upper": "Thân giày",
+      "capacity": "Sức chứa",
+      "fit": "Form dáng",
+      "lens": "Tròng kính",
+      "strap": "Dây đeo",
+      "height": "Chiều cao",
+      "volume": "Dung tích",
+      "capacity_ml": "Dung tích",
+      "closure": "Cách đóng"
     }
   },
   "values": {
@@ -119,6 +139,106 @@
     "read_full": "Đọc toàn bộ bài viết",
     "load_more": "Xem thêm tin tức",
     "read_time": "{{count}} phút đọc"
+  },
+  "listing": {
+    "product_list_title": "Danh sách sản phẩm",
+    "wishlist_title": "Danh sách yêu thích",
+    "showing_count": "Hiển thị {{count}} sản phẩm",
+    "empty_category": "Không có sản phẩm trong danh mục này.",
+    "wishlist_empty": "Bạn chưa có sản phẩm yêu thích.",
+    "wishlist_browse": "Xem danh sách sản phẩm",
+    "remove_wishlist": "Bỏ",
+    "price_line": "Giá: {{value}}",
+    "heart_toggle_aria": "Thêm hoặc bỏ yêu thích",
+    "catalog_items": {
+      "1": {
+        "name": "Găng Boxing Twins",
+        "size": "Size: 10, 12, 14 OZ",
+        "detail": "Găng đấm da tổng hợp, đệm mút nhiều lớp, khóa dán cổ tay chắc chắn — phù hợp tập boxing và Muay tại phòng gym.",
+        "spec_material": "Da PU, lót foam",
+        "spec_weight": "10 / 12 / 14 OZ"
+      },
+      "2": {
+        "name": "Giày chạy bộ Pro Runner",
+        "size": "Size: 39–45",
+        "detail": "Đệm giữa êm ái, đế ngoài chống mài mòn, upper thoáng khí cho buổi chạy đường dài hoặc tập HIIT.",
+        "spec_sole": "Cao su chống trượt",
+        "spec_upper": "Lưới engineered mesh"
+      },
+      "3": {
+        "name": "Lều cắm trại 2 người",
+        "size": "210 × 130 × 110 cm",
+        "detail": "Khung nhôm nhẹ, vải chống nước, cửa lưới chống côn trùng — gọn gàng cho chuyến dã ngoại cuối tuần.",
+        "spec_cap": "2 người",
+        "spec_mat": "Polyester 190T, seam taped"
+      },
+      "4": {
+        "name": "Áo khoác giữ nhiệt SportHeat",
+        "size": "Size: S–XXL",
+        "detail": "Lớp trong brushed ấm, ngoài chống gió nhẹ — mặc trước khi khởi động hoặc sau khi tập ngoài trời.",
+        "spec_mat": "Polyester / spandex",
+        "spec_fit": "Regular fit"
+      },
+      "5": {
+        "name": "Kính bơi Mirror Pro",
+        "size": "Gọng điều chỉnh",
+        "detail": "Tròng chống sương mờ, gioăng silicone mềm, dây đeo chia độ — bơi hồ hoặc biển đều ổn định.",
+        "spec_lens": "PC tráng gương",
+        "spec_strap": "Silicone, khóa nhanh"
+      },
+      "6": {
+        "name": "Bao cát treo tập boxing",
+        "size": "Cao 120 cm / nặng ~35 kg khi tấy",
+        "detail": "Vỏ canvas bền, xích treo kèm theo — phù hợp phòng tập nhỏ hoặc gara có móc treo chịu lực.",
+        "spec_mat": "Canvas, đệm xốp bên trong",
+        "spec_height": "120 cm"
+      },
+      "7": {
+        "name": "Túi đeo hông chạy trail",
+        "size": "Dây đeo tùy chỉnh",
+        "detail": "Ngăn đựng chai nước 500 ml, túi zip chống nước cho điện thoại — chạy trail hoặc đi bộ đường dài.",
+        "spec_mat": "Nylon chống nước",
+        "spec_vol": "2 ngăn + khe chai"
+      },
+      "8": {
+        "name": "Bình nước thể thao 750 ml",
+        "size": "750 ml",
+        "detail": "Nắp bật một tay, thân Tritan không mùi — mang theo khi tập gym hoặc đạp xe.",
+        "spec_mat": "Tritan BPA-free",
+        "spec_ml": "750 ml"
+      },
+      "9": {
+        "name": "Găng MMA training",
+        "size": "Size: M / L",
+        "detail": "Ngón hở, đệm đốt ngón dày — tập grappling, MMA hoặc boxing nhẹ với bạn tập.",
+        "spec_mat": "Da tổng hợp, foam EVA",
+        "spec_close": "Quấn dán cổ tay"
+      }
+    },
+    "sport_filters": {
+      "all": "Tất cả",
+      "picnic": "Dã ngoại",
+      "running": "Chạy bộ & Đi bộ",
+      "warm": "Đồ giữ ấm",
+      "swim": "Bơi lội",
+      "boxing": "Boxing & Muay"
+    },
+    "footer_cols": {
+      "support": "Hỗ trợ khách hàng",
+      "about": "Về LifeStyle Shop",
+      "offers": "Ưu đãi khách hàng"
+    },
+    "footer_links": {
+      "order_guide": "Hướng dẫn đặt hàng",
+      "cs_contact": "Liên hệ CSKH",
+      "returns": "Đổi trả & bảo hành",
+      "who": "LifeStyle Shop là ai?",
+      "recruit": "Tuyển dụng",
+      "sports_blog": "Blog thể thao",
+      "points": "Chương trình tích điểm",
+      "voucher": "Voucher giảm giá",
+      "fanpage": "Follow fanpage để giảm 10%"
+    }
   },
   "footer": {
     "store": "Cửa hàng",

@@ -9,8 +9,10 @@ import {
   sortProducts,
   countByCategory,
 } from '../utils/searchFilter'
+import { MOCK_PRODUCTS } from '../data/mockProducts'
+import { formatVndAmount } from '../utils/formatVnd'
 
-const PRICE_MAX = 3000
+const PRICE_MAX = 6_000_000
 
 const CATEGORY_IDS = ['mac', 'ipad', 'audio', 'accessories']
 
@@ -21,112 +23,12 @@ const FEATURE_IDS = [
   'm_series',
 ]
 
-/** Mock cố định: có categoryId, priceValue, featureIds để lọc/sắp xếp tái lập được. */
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    name: 'MacBook Pro 16"',
-    tagline: 'M3 Max performance',
-    categoryId: 'mac',
-    priceValue: 2499,
-    price: '$2,499.00',
-    featureIds: ['m_series', 'wireless_charging'],
-    isNew: true,
-    image:
-      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 2,
-    name: 'iPad Pro 13"',
-    tagline: 'Ultra Retina XDR',
-    categoryId: 'ipad',
-    priceValue: 1099,
-    price: '$1,099.00',
-    featureIds: ['m_series'],
-    isNew: true,
-    image:
-      'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 3,
-    name: 'AirPods Pro',
-    tagline: 'Adaptive Audio',
-    categoryId: 'audio',
-    priceValue: 249,
-    price: '$249.00',
-    featureIds: ['noise_cancellation', 'wireless_charging', 'water_resistant'],
-    isNew: true,
-    image:
-      'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 4,
-    name: 'Magic Keyboard',
-    tagline: 'Sleek & Light',
-    categoryId: 'accessories',
-    priceValue: 349,
-    price: '$349.00',
-    featureIds: [],
-    isNew: false,
-    image:
-      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 5,
-    name: 'Studio Display',
-    tagline: '27" 5K Retina',
-    categoryId: 'mac',
-    priceValue: 1599,
-    price: '$1,599.00',
-    featureIds: [],
-    isNew: false,
-    image:
-      'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 6,
-    name: 'iPad Air',
-    tagline: 'Serious power',
-    categoryId: 'ipad',
-    priceValue: 599,
-    price: '$599.00',
-    featureIds: ['m_series'],
-    isNew: false,
-    image:
-      'https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 7,
-    name: 'HomePod mini',
-    tagline: 'Room-filling sound',
-    categoryId: 'audio',
-    priceValue: 99,
-    price: '$99.00',
-    featureIds: ['wireless_charging'],
-    isNew: false,
-    image:
-      'https://images.unsplash.com/photo-1612282130134-49b84fa8004f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 8,
-    name: 'USB-C Charge Cable',
-    tagline: '2m woven',
-    categoryId: 'accessories',
-    priceValue: 29,
-    price: '$29.00',
-    featureIds: [],
-    isNew: false,
-    image:
-      'https://images.unsplash.com/photo-1595225476474-87563907a212?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-]
-
 function toggleIdInList(list, id) {
   return list.includes(id) ? list.filter((x) => x !== id) : [...list, id]
 }
 
 const SearchResultsPage = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
@@ -202,8 +104,11 @@ const SearchResultsPage = () => {
           onChange={setPriceRange}
         />
         <div className="flex justify-between text-xs text-gray-500 mt-2 font-medium">
-          <span>$0</span>
-          <span>${PRICE_MAX}+</span>
+          <span>0</span>
+          <span>
+            {formatVndAmount(PRICE_MAX, i18n.language)}
+            <span className="lowercase">+</span>
+          </span>
         </div>
       </div>
 
