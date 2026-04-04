@@ -1,10 +1,14 @@
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 const ProductCard = ({ product }) => {
   const { t } = useTranslation()
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-[#0071e3]/10 transition-shadow duration-300 group cursor-pointer flex flex-col items-center text-center">
+    <Link
+      to={`/product/${product.id}`}
+      className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-[#0071e3]/10 transition-shadow duration-300 group cursor-pointer flex flex-col items-center text-center no-underline text-inherit"
+    >
       {product.isNew && (
         <p className="text-[#0071e3] text-[10px] font-bold uppercase tracking-widest mb-1">
           {t('products.new')}
@@ -23,11 +27,11 @@ const ProductCard = ({ product }) => {
       
       <div className="mt-auto w-full flex justify-between items-center bg-[#f5f5f7] rounded-full p-1 pl-4">
         <span className="text-sm font-semibold text-[#1d1d1f]">{product.price}</span>
-        <button className="bg-[#1d1d1f] text-white text-xs font-bold px-4 py-2 rounded-full group-hover:bg-[#0071e3] transition-colors">
+        <span className="bg-[#1d1d1f] text-white text-xs font-bold px-4 py-2 rounded-full group-hover:bg-[#0071e3] transition-colors inline-block">
           {t('products.buy')}
-        </button>
+        </span>
       </div>
-    </div>
+    </Link>
   )
 }
 

@@ -30,6 +30,39 @@
     "buy": "Buy",
     "load_more": "Load More Products"
   },
+  "productDetail": {
+    "breadcrumb_home": "Home",
+    "breadcrumb_shop": "Shop",
+    "gallery_label": "Product images",
+    "qty": "Quantity",
+    "add_cart": "Add to Cart",
+    "wishlist": "Save",
+    "shipping": "Free delivery on orders over $50. Pickup available at select stores.",
+    "specs_title": "Tech specs",
+    "not_found": "Product not found",
+    "not_found_hint": "This item may have been removed or the link is incorrect.",
+    "back_shop": "Back to shop",
+    "descriptions": {
+      "1": "Premium over-ear headphones with adaptive noise cancellation, spatial audio, and a breathable knit canopy for all-day comfort.",
+      "2": "Precision-machined aluminum frame, tactile switches, and programmable layers for creators who live in the flow state.",
+      "3": "Reference-grade 6K panel with extreme dynamic range — ideal for color-critical work and immersive creative sessions.",
+      "4": "Advanced health sensors, always-on display, and seamless sync with your digital life on the go."
+    },
+    "specs": {
+      "active_noise": "Active noise cancellation",
+      "battery": "Battery",
+      "chip": "Chip",
+      "switches": "Switches",
+      "layout": "Layout",
+      "connectivity": "Connectivity",
+      "resolution": "Resolution",
+      "brightness": "Brightness",
+      "ports": "Ports",
+      "display_watch": "Display",
+      "water": "Water resistance",
+      "sensors": "Sensors"
+    }
+  },
   "values": {
     "delivery_title": "Fast, free delivery",
     "delivery_desc": "Or pick up available items at an Apple Store.",
