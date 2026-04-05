@@ -35,10 +35,14 @@ const CatalogProductCard = ({
   onRemoveFromWishlist,
 }) => {
   const { t, i18n } = useTranslation()
-  const name = t(`listing.catalog_items.${product.catalogItemId}.name`)
-  const sizeLine = t(`listing.catalog_items.${product.catalogItemId}.size`)
-  const priceStr = formatVndAmount(product.priceVnd, i18n.language)
+  
+  // Real API data properties
+  const name = product.name
+  const priceStr = formatVndAmount(product.price, i18n.language)
   const priceLabel = t('listing.price_line', { value: priceStr })
+  
+  // Use product.category or description as subtitle
+  const subtitle = product.category || product.description?.substring(0, 50) + '...'
 
   const inWishlist =
     mode === 'wishlist'
@@ -67,7 +71,7 @@ const CatalogProductCard = ({
       >
         <div className="relative w-full aspect-square rounded-md bg-[#f5f5f7] overflow-hidden">
           <img
-            src={product.image}
+            src={Array.isArray(product.images) && product.images.length > 0 ? product.images[0] : (product.image || '')}
             alt=""
             className="w-full h-full object-cover"
           />
@@ -75,7 +79,7 @@ const CatalogProductCard = ({
         <p className="mt-3 text-sm font-bold text-[#1d1d1f] leading-snug line-clamp-2">
           {name}
         </p>
-        <p className="mt-1 text-xs text-gray-600 leading-relaxed">{sizeLine}</p>
+        <p className="mt-1 text-xs text-gray-600 leading-relaxed">{subtitle}</p>
         <p className="mt-2 text-xs font-medium text-[#1d1d1f]">{priceLabel}</p>
       </Link>
 
