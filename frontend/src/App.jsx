@@ -14,6 +14,13 @@ import ProfilePage from './pages/ProfilePage'
 import { Toaster } from 'react-hot-toast'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
+import AdminLayout from './components/admin/AdminLayout'
+import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminAnalyticsPage from './pages/admin/AdminAnalyticsPage'
+import ProductsManagementPage from './pages/admin/ProductsManagementPage'
+import CategoriesManagementPage from './pages/admin/CategoriesManagementPage'
+import OrdersManagementPage from './pages/admin/OrdersManagementPage'
+import UsersManagementPage from './pages/admin/UsersManagementPage'
 import { ConfigProvider, Input } from 'antd'
 import {
   UserOutlined,
@@ -150,6 +157,14 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboardPage />} />
+              <Route path="analytics" element={<AdminAnalyticsPage />} />
+              <Route path="products" element={<ProductsManagementPage />} />
+              <Route path="categories" element={<CategoriesManagementPage />} />
+              <Route path="orders" element={<OrdersManagementPage />} />
+              <Route path="users" element={<UsersManagementPage />} />
+            </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
