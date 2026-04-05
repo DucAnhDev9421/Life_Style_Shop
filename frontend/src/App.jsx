@@ -6,6 +6,7 @@ import SearchResultsPage from './pages/SearchResultsPage'
 import ProductListPage from './pages/ProductListPage'
 import WishlistPage from './pages/WishlistPage'
 import BlogPage from './pages/BlogPage'
+import BlogPostPage from './pages/BlogPostPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -126,6 +127,7 @@ function App() {
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:id" element={<BlogPostPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
