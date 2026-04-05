@@ -131,10 +131,30 @@ async function verifyUser(userId) {
   return toPublicUser(user)
 }
 
+async function updateProfile(userId, data) {
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $set: data },
+    { new: true, runValidators: true }
+  )
+  return toPublicUser(user)
+}
+
+async function changePassword(userId, { oldPassword, newPassword }) {
+  const user = await User.findById(userId).select('+passwordHash')
+  const isMatch = await bcrypt.compare(oldPassword, user.passwordHash)
+  if (!isMatch) throw new AppError('Old password incorrect', 400)
+
+  user.passwordHash = await bcrypt.hash(newPassword, 12) // Sử dụng BCRYPT_ROUNDS = 12
+  await user.save()
+}
+
 module.exports = {
   register,
   login,
   refresh,
   logout,
   verifyUser,
+  updateProfile,
+  changePassword
 }

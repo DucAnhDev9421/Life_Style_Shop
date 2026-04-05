@@ -10,6 +10,8 @@ import BlogPostPage from './pages/BlogPostPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import ProfilePage from './pages/ProfilePage'
+import { Toaster } from 'react-hot-toast'
 import { ConfigProvider, Input } from 'antd'
 import {
   UserOutlined,
@@ -104,7 +106,7 @@ function App() {
                     0
                   </span>
                 </Link>
-                <Link to={user ? "/account" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
+                <Link to={user ? "/profile" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
                   <UserOutlined className="text-[19px]" />
                 </Link>
                 <div className="h-4 w-px bg-white/20 mx-1" />
@@ -131,8 +133,10 @@ function App() {
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
         </main>
       </div>
     </ConfigProvider>
