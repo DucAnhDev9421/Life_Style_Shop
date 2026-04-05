@@ -42,6 +42,7 @@ export default function AdminSidebar({ user }) {
         <p className="px-3 mb-3 text-[10px] font-bold uppercase tracking-widest text-[#86868b]">
           {t('admin.nav.management', 'Management')}
         </p>
+        {/* eslint-disable-next-line no-unused-vars */}
         {navItems.map(({ to, icon: Icon, labelKey, end }) => (
           <NavLink
             key={to}
