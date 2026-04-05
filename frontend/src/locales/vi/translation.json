@@ -103,6 +103,9 @@
     "showing": "Hiển thị {{count}} kết quả",
     "query_placeholder": "Tìm theo tên hoặc mô tả ngắn",
     "no_results": "Không có sản phẩm phù hợp. Hãy thử đổi từ khóa hoặc bộ lọc.",
+    "no_results_title": "Không tìm thấy sản phẩm",
+    "clear_filters": "Xóa tất cả bộ lọc",
+    "price_all": "Tất cả giá",
     "filters": "Bộ lọc",
     "sort_by": "Sắp xếp theo:",
     "categories": "Danh mục",
@@ -129,6 +132,8 @@
   },
   "blog": {
     "title": "Phòng tin tức",
+    "subtitle": "Câu chuyện từ đội ngũ xây dựng tương lai công nghệ.",
+    "header_tag": "Khám phá",
     "all_stories": "Tất cả bài viết",
     "engineering": "Kỹ thuật",
     "software": "Phần mềm",
@@ -138,7 +143,15 @@
     "latest": "Tin mới nhất",
     "read_full": "Đọc toàn bộ bài viết",
     "load_more": "Xem thêm tin tức",
-    "read_time": "{{count}} phút đọc"
+    "read_time": "{{count}} phút đọc",
+    "post_count": "{{count}} bài viết",
+    "no_posts_title": "Không có bài viết trong danh mục này",
+    "no_posts": "Hãy quay lại sau để xem những câu chuyện mới trong phần này.",
+    "back_to_newsroom": "Tất cả bài viết",
+    "post_not_found": "Không tìm thấy bài viết",
+    "post_not_found_desc": "Bài viết này có thể đã được chuyển hoặc không còn tồn tại.",
+    "share_this": "Chia sẻ bài viết này",
+    "related_articles": "Bài viết liên quan"
   },
   "listing": {
     "product_list_title": "Danh sách sản phẩm",
