@@ -17,6 +17,7 @@ function formatMonth(year, month) {
   return date.toLocaleDateString('en', { month: 'short', year: '2-digit' })
 }
 
+// eslint-disable-next-line no-unused-vars
 function SummaryCard({ icon: Icon, label, value, subValue, color, loading }) {
   if (loading) {
     return (
