@@ -14,7 +14,6 @@ import { MOCK_PRODUCTS, SPORT_FILTERS } from '../data/mockProducts'
 import { useTranslation } from 'react-i18next'
 import {
   filterProducts,
-  sortProducts,
 } from '../utils/searchFilter'
 import { formatVndAmount } from '../utils/formatVnd'
 
