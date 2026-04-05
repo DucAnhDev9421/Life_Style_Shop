@@ -23,11 +23,16 @@ export function mapCartResponseToLines(payload) {
 
 /**
  * GET — lấy toàn bộ giỏ hàng của user hiện tại.
- * Token / cookie: thêm interceptor trong api.js nếu backend yêu cầu Authorization.
+ * Trả mảng rỗng nếu backend trả 404 (endpoint chưa có), tránh crash UI.
  */
 export async function fetchCart() {
-  const { data } = await api.get('/cart')
-  return mapCartResponseToLines(data)
+  try {
+    const { data } = await api.get('/cart')
+    return mapCartResponseToLines(data)
+  } catch (err) {
+    if (err.response?.status === 404) return []
+    throw err
+  }
 }
 
 /**
@@ -35,15 +40,23 @@ export async function fetchCart() {
  * Đổi method/path cho khớp contract backend (vd: PUT /cart/items/:id).
  */
 export async function updateCartItemQuantity(cartItemId, quantity) {
-  const { data } = await api.patch(`/cart/items/${cartItemId}`, {
-    quantity,
-  })
-  return data
+  try {
+    const { data } = await api.patch(`/cart/items/${cartItemId}`, { quantity })
+    return data
+  } catch (err) {
+    if (err.response?.status === 404) return
+    throw err
+  }
 }
 
 /**
  * DELETE — xóa hẳn một dòng khỏi giỏ (sau khi user xác nhận popup).
  */
 export async function removeCartItem(cartItemId) {
-  await api.delete(`/cart/items/${cartItemId}`)
+  try {
+    await api.delete(`/cart/items/${cartItemId}`)
+  } catch (err) {
+    if (err.response?.status === 404) return
+    throw err
+  }
 }

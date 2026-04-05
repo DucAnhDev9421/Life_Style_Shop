@@ -120,7 +120,7 @@ function App() {
                     {itemCount > 99 ? '99+' : itemCount}
                   </span>
                 </Link>
-                <Link to={isLoggedIn ? "/account" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
+                <Link to={isLoggedIn ? "/profile" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
                   <UserOutlined className="text-[19px]" />
                 </Link>
                 <div className="h-4 w-px bg-white/20 mx-1" />
