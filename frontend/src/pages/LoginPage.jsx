@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined, RightOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { authApi } from '../services/authApi';
+import { authApi } from '../services/authApi'
+import { notifyAuthChanged } from '../utils/authEvents'
 
 
 export default function LoginPage() {
@@ -19,9 +20,10 @@ export default function LoginPage() {
         if (response.data.refreshToken) {
           localStorage.setItem('refreshToken', response.data.refreshToken);
         }
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        message.success('Welcome back!');
-        navigate('/');
+        localStorage.setItem('user', JSON.stringify(response.data.user))
+        notifyAuthChanged()
+        message.success('Welcome back!')
+        navigate('/')
       }
     } catch (error) {
       console.error(error);
