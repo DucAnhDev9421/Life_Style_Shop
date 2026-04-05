@@ -62,7 +62,7 @@ const CatalogProductCard = ({
       >
         <div className="relative w-full aspect-square rounded-md bg-[#f5f5f7] overflow-hidden">
           <img
-            src={Array.isArray(product.images) && product.images.length > 0 ? product.images[0] : (product.image || '')}
+            src={Array.isArray(product.images) && product.images.length > 0 ? product.images[0] : (product.image || null)}
             alt=""
             className="w-full h-full object-cover"
           />
