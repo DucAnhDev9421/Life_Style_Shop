@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   AppstoreOutlined,
   EnvironmentOutlined,
@@ -7,10 +7,11 @@ import {
   CloudOutlined,
   BoxPlotOutlined,
 } from '@ant-design/icons'
-import { Select, Button } from 'antd'
+import { Select, Button, Spin } from 'antd'
 import CatalogProductCard from '../components/common/CatalogProductCard'
 import ListingPageFooter from '../components/common/ListingPageFooter'
-import { MOCK_PRODUCTS, SPORT_FILTERS } from '../data/mockProducts'
+import { SPORT_FILTERS } from '../data/mockProducts'
+import { getProducts } from '../services/api'
 import { useTranslation } from 'react-i18next'
 
 const SPORT_ICONS = {
@@ -24,28 +25,45 @@ const SPORT_ICONS = {
 
 const ProductListPage = () => {
   const { t } = useTranslation()
-  const [sport, setSport] = useState('boxing')
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [sport, setSport] = useState('all')
   const [sortBy, setSortBy] = useState('featured')
   const [, setWishTick] = useState(0)
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true)
+      try {
+        const payload = await getProducts()
+        setProducts(payload.data.items)
+      } catch (e) {
+        console.error('Failed to fetch', e)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProducts()
+  }, [])
+
   const visible = useMemo(() => {
-    let list =
-      sport === 'all'
-        ? MOCK_PRODUCTS
-        : MOCK_PRODUCTS.filter((p) => p.sportFilter === sport)
+    let list = [...products]
+
+    if (sport !== 'all') {
+      list = list.filter((p) =>
+        (p.category || '').toLowerCase().includes(sport.toLowerCase())
+      )
+    }
 
     const sortFns = {
-      featured: (a, b) => {
-        if (Boolean(a.isNew) !== Boolean(b.isNew)) return a.isNew ? -1 : 1
-        return a.id - b.id
-      },
-      price_low: (a, b) => a.priceValue - b.priceValue,
-      price_high: (a, b) => b.priceValue - a.priceValue,
-      newest: (a, b) => b.id - a.id,
+      price_low: (a, b) => a.price - b.price,
+      price_high: (a, b) => b.price - a.price,
+      newest: (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+      featured: (a, b) => (b.status === 'active' ? 1 : -1),
     }
     const cmp = sortFns[sortBy] || sortFns.featured
     return [...list].sort(cmp)
-  }, [sport, sortBy])
+  }, [products, sport, sortBy])
 
   return (
     <div className="bg-white min-h-screen pb-6">
@@ -110,14 +128,20 @@ const ProductListPage = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-              {visible.map((product) => (
-                <CatalogProductCard
-                  key={product.id}
-                  product={product}
-                  mode="catalog"
-                  onWishlistChange={() => setWishTick((x) => x + 1)}
-                />
-              ))}
+              {loading ? (
+                <div className="col-span-full py-20 flex justify-center">
+                  <Spin size="large" />
+                </div>
+              ) : (
+                visible.map((product) => (
+                  <CatalogProductCard
+                    key={product.id}
+                    product={product}
+                    mode="catalog"
+                    onWishlistChange={() => setWishTick((x) => x + 1)}
+                  />
+                ))
+              )}
             </div>
 
             {visible.length === 0 && (
