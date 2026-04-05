@@ -1,9 +1,13 @@
 const express = require('express')
 const authRoutes = require('./auth')
+const productRoutes = require('./products')
+const categoryRoutes = require('./categories')
 
 const router = express.Router()
 
 router.use('/auth', authRoutes)
+router.use('/products', productRoutes)
+router.use('/categories', categoryRoutes)
 
 router.get('/', (_req, res) => {
   res.status(200).json({
