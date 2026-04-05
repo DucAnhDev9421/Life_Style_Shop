@@ -56,7 +56,11 @@ const ProductCard = ({
 
         <div className="relative w-full aspect-square mb-6">
           <img
-            src={product.image}
+            src={
+              Array.isArray(product.images) && product.images.length > 0
+                ? product.images[0]
+                : product.image || null
+            }
             alt=""
             className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
           />

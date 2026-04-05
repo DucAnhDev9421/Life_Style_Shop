@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
       default: 'active',
     },
     isEmailVerified: { type: Boolean, default: false },
+    wishlist: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    }],
     lastLoginAt: { type: Date, default: null },
     refreshTokenHash: { type: String, default: null, select: false },
     refreshTokenExpiresAt: { type: Date, default: null, select: false },

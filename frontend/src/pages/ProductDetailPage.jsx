@@ -1,16 +1,45 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Button, InputNumber } from 'antd'
-import { ShoppingCartOutlined, HeartOutlined } from '@ant-design/icons'
+import { Button, InputNumber, Spin } from 'antd'
+import { ShoppingCartOutlined, HeartOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { getProductById } from '../data/products'
+import { getProductById } from '../services/api'
+import { formatVndAmount } from '../utils/formatVnd'
+import { useCart } from '../context/useCart'
+import toast from 'react-hot-toast'
 
 function ProductDetailPage() {
   const { id } = useParams()
-  const { t } = useTranslation()
-  const product = useMemo(() => getProductById(id), [id])
+  const { t, i18n } = useTranslation()
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [activeImage, setActiveImage] = useState(0)
   const [qty, setQty] = useState(1)
+  const [adding, setAdding] = useState(false)
+  const { addItem } = useCart()
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setLoading(true)
+      try {
+        const payload = await getProductById(id)
+        setProduct(payload.data.product)
+      } catch (e) {
+        console.error('Failed to fetch product', e)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProduct()
+  }, [id])
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <Spin size="large" />
+      </div>
+    )
+  }
 
   if (!product) {
     return (
@@ -83,22 +112,24 @@ function ProductDetailPage() {
             </p>
           )}
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-[#1d1d1f] md:text-4xl">
-            {product.nameKey ? t(product.nameKey) : product.name}
+            {product.name}
           </h1>
           <p className="mt-2 text-gray-500">
-            {product.taglineKey ? t(product.taglineKey) : product.tagline}
+            {product.category}
           </p>
-          <p className="mt-6 text-2xl font-semibold text-[#1d1d1f]">{product.price}</p>
+          <p className="mt-6 text-2xl font-semibold text-[#1d1d1f]">
+            {formatVndAmount(product.price, i18n.language)}
+          </p>
 
-          <p className="mt-6 text-base leading-relaxed text-gray-600">
-            {t(product.descriptionKey)}
+          <p className="mt-6 text-base leading-relaxed text-gray-600 whitespace-pre-line">
+            {product.description}
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <span className="text-sm font-medium text-gray-600">{t('productDetail.qty')}</span>
             <InputNumber
               min={1}
-              max={99}
+              max={product.stock || 99}
               value={qty}
               onChange={(v) => setQty(Number(v) || 1)}
               size="large"
@@ -111,6 +142,18 @@ function ProductDetailPage() {
               type="primary"
               size="large"
               icon={<ShoppingCartOutlined />}
+              loading={adding}
+              onClick={async () => {
+                setAdding(true)
+                try {
+                  await addItem(product._id || product.id, qty)
+                  toast.success(t('productDetail.add_cart_success', 'Đã thêm vào giỏ hàng'))
+                } catch (err) {
+                  toast.error(t('productDetail.add_cart_error', 'Không thể thêm vào giỏ'))
+                } finally {
+                  setAdding(false)
+                }
+              }}
               className="h-12 min-w-[200px] !rounded-full font-semibold shadow-lg shadow-blue-500/20"
             >
               {t('productDetail.add_cart')}
@@ -131,17 +174,20 @@ function ProductDetailPage() {
               {t('productDetail.specs_title')}
             </h2>
             <dl className="mt-4 space-y-3">
-              {product.specs.map((row) => (
-                <div
-                  key={`${row.labelKey}-${row.valueKey || row.value || ''}`}
-                  className="flex flex-col gap-1 border-b border-gray-100 pb-3 sm:flex-row sm:justify-between"
-                >
-                  <dt className="text-sm text-gray-500">{t(row.labelKey)}</dt>
-                  <dd className="text-sm font-medium text-[#1d1d1f]">
-                    {row.valueKey ? t(row.valueKey) : row.value}
-                  </dd>
+              <div className="flex flex-col gap-1 border-b border-gray-100 pb-3 sm:flex-row sm:justify-between">
+                <dt className="text-sm text-gray-500">{t('productDetail.stock')}</dt>
+                <dd className="text-sm font-medium text-[#1d1d1f]">{product.stock}</dd>
+              </div>
+              <div className="flex flex-col gap-1 border-b border-gray-100 pb-3 sm:flex-row sm:justify-between">
+                <dt className="text-sm text-gray-500">{t('productDetail.category')}</dt>
+                <dd className="text-sm font-medium text-[#1d1d1f]">{product.category}</dd>
+              </div>
+              {product.seller && (
+                <div className="flex flex-col gap-1 border-b border-gray-100 pb-3 sm:flex-row sm:justify-between">
+                  <dt className="text-sm text-gray-500">{t('productDetail.seller')}</dt>
+                  <dd className="text-sm font-medium text-[#1d1d1f]">{product.seller.fullName}</dd>
                 </div>
-              ))}
+              )}
             </dl>
           </div>
         </div>

@@ -2,12 +2,20 @@ const express = require('express')
 const authRoutes = require('./auth')
 const productRoutes = require('./products')
 const categoryRoutes = require('./categories')
+const wishlistRoutes = require('./wishlist')
+const orderRoutes = require('./orders')
+const cartRoutes = require('./cart')
+const adminRoutes = require('./admin')
 
 const router = express.Router()
 
 router.use('/auth', authRoutes)
 router.use('/products', productRoutes)
 router.use('/categories', categoryRoutes)
+router.use('/wishlist', wishlistRoutes)
+router.use('/orders', orderRoutes)
+router.use('/cart', cartRoutes)
+router.use('/admin', adminRoutes)
 
 router.get('/', (_req, res) => {
   res.status(200).json({
