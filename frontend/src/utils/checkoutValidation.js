@@ -12,8 +12,8 @@ export function normalizeVnPhone(raw) {
  */
 export function isValidVnPhone(normalized) {
   if (!normalized) return false
-  if (/^0[35789]\d{8}$/.test(normalized)) return true
-  if (/^(\+84|84)(3|5|7|8|9)\d{8}$/.test(normalized)) return true
+  if (/^0[235789]\d{7,9}$/.test(normalized)) return true
+  if (/^(\+84|84)(2|3|5|7|8|9)\d{7,9}$/.test(normalized)) return true
   return false
 }
 

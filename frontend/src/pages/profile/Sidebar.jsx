@@ -1,7 +1,7 @@
 import React from 'react';
-import { UserRound, ShieldCheck } from 'lucide-react';
+import { UserRound, ShieldCheck, LogOut } from 'lucide-react';
 
-export default function Sidebar({ user, activeTab, setActiveTab }) {
+export default function Sidebar({ user, activeTab, setActiveTab, onLogout }) {
   return (
     <div className="w-full md:w-[280px] flex-shrink-0">
       <div className="bg-white rounded-2xl shadow-sm border border-[#e5e5ea] overflow-hidden sticky top-24">
@@ -40,6 +40,16 @@ export default function Sidebar({ user, activeTab, setActiveTab }) {
             <ShieldCheck className={`w-5 h-5 ${activeTab === 'security' ? 'text-[#0071e3]' : 'text-[#86868b]'}`} />
             Security & Password
           </button>
+          
+          <div className="pt-2">
+            <button
+              onClick={onLogout}
+              className="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl text-red-500 hover:bg-red-50 transition-all border border-transparent hover:border-red-100"
+            >
+              <LogOut className="w-5 h-5 text-red-500" />
+              Log Out
+            </button>
+          </div>
         </nav>
       </div>
     </div>

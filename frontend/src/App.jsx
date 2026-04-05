@@ -29,6 +29,7 @@ import {
   HeartOutlined,
   SearchOutlined,
   ShoppingOutlined,
+  SafetyCertificateOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
@@ -53,6 +54,13 @@ function App() {
   }, [])
 
   const isLoggedIn = Boolean(localStorage.getItem('token'))
+  const userRole = (() => {
+    try {
+      const u = JSON.parse(localStorage.getItem('user') || '{}');
+      return u.role;
+    } catch { return null; }
+  })();
+  const isAdmin = userRole === 'admin' || userRole === 'seller';
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'vi' : 'en'
@@ -130,6 +138,11 @@ function App() {
                 <Link to="/orders" title="Lịch sử đơn hàng" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
                   <ShoppingOutlined className="text-[19px]" />
                 </Link>
+                {isAdmin && (
+                  <Link to="/admin" title="Quản trị" className="transition-all hover:text-amber-400 hover:scale-110 relative text-amber-300">
+                    <SafetyCertificateOutlined className="text-[19px]" />
+                  </Link>
+                )}
                 <Link to="/cart" className="transition-all hover:text-white hover:scale-110 flex items-center relative text-white/80 group">
                   <ShoppingCartOutlined className="text-[19px]" />
                   <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-white text-[9px] font-black text-[#0071e3] shadow-sm">
