@@ -3,12 +3,12 @@ import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, IdcardOutlined, RightOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { authApi } from '../services/authApi';
-import { useTranslation } from 'react-i18next';
+
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
 
   const onFinish = async (values) => {
     setLoading(true);
