@@ -322,5 +322,103 @@
     "terms": "Điều khoản sử dụng",
     "sales": "Chính sách bán hàng",
     "legal": "Pháp lý"
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Tổng quan",
+      "products": "Sản phẩm",
+      "categories": "Danh mục",
+      "orders": "Đơn hàng",
+      "users": "Người dùng",
+      "analytics": "Phân tích",
+      "management": "Quản lý",
+      "settings": "Cài đặt",
+      "logout": "Đăng xuất"
+    },
+    "dashboard": {
+      "title": "Tổng quan",
+      "subtitle": "Theo dõi hiệu suất cửa hàng của bạn",
+      "add_product": "Thêm sản phẩm",
+      "recent_products": "Sản phẩm gần đây",
+      "top_categories": "Danh mục hàng đầu",
+      "view_all": "Xem tất cả",
+      "no_products": "Chưa có sản phẩm",
+      "no_categories": "Chưa có danh mục",
+      "products": "sản phẩm"
+    },
+    "stats": {
+      "total_products": "Tổng sản phẩm",
+      "total_users": "Tổng người dùng",
+      "active_products": "Sản phẩm đang bán",
+      "out_of_stock": "Hết hàng",
+      "vs_last_month": "so với tháng trước"
+    },
+    "products": {
+      "title": "Sản phẩm",
+      "subtitle": "Quản lý kho hàng của bạn",
+      "add": "Thêm sản phẩm",
+      "search_placeholder": "Tìm kiếm sản phẩm...",
+      "items": "mặt hàng",
+      "empty": "Không tìm thấy sản phẩm",
+      "delete_confirm_title": "Xóa sản phẩm",
+      "delete": "Xóa",
+      "modal_create_title": "Thêm sản phẩm",
+      "modal_edit_title": "Sửa sản phẩm",
+      "save_changes": "Lưu thay đổi",
+      "create_success": "Tạo sản phẩm thành công",
+      "edit_success": "Cập nhật sản phẩm thành công"
+    },
+    "orders": {
+      "title": "Đơn hàng",
+      "subtitle": "Theo dõi và quản lý tất cả đơn hàng",
+      "search_placeholder": "Tìm kiếm đơn hàng, khách hàng...",
+      "empty": "Không tìm thấy đơn hàng"
+    },
+    "users": {
+      "title": "Người dùng",
+      "subtitle": "Quản lý tài khoản, vai trò và quyền truy cập",
+      "search_placeholder": "Tìm theo tên hoặc email...",
+      "empty": "Không tìm thấy người dùng"
+    },
+    "analytics": {
+      "title": "Phân tích",
+      "subtitle": "Thông tin chi tiết về sự tăng trưởng và hiệu suất cửa hàng",
+      "monthly_growth": "Tăng trưởng hàng tháng",
+      "monthly_growth_desc": "Người dùng và sản phẩm mới trong 12 tháng qua",
+      "product_status": "Phân bổ trạng thái sản phẩm",
+      "product_status_desc": "Phân bổ sản phẩm theo trạng thái hiện tại",
+      "top_categories": "Danh mục hàng đầu",
+      "top_categories_desc": "Số lượng sản phẩm theo danh mục",
+      "no_data": "Chưa có dữ liệu"
+    },
+    "categories": {
+      "title": "Danh mục",
+      "subtitle": "Sắp xếp sản phẩm theo danh mục",
+      "add": "Thêm danh mục",
+      "search_placeholder": "Tìm kiếm danh mục...",
+      "items": "danh mục",
+      "empty": "Chưa có danh mục nào",
+      "empty_create": "Tạo danh mục đầu tiên",
+      "modal_create_title": "Thêm danh mục",
+      "modal_edit_title": "Sửa danh mục",
+      "form_name": "Tên danh mục",
+      "form_name_required": "Vui lòng nhập tên danh mục",
+      "form_name_placeholder": "VD: Điện tử, Thời trang, Thể thao",
+      "form_slug": "Slug",
+      "form_slug_invalid": "Chỉ dùng chữ thường, số và dấu gạch ngang",
+      "form_slug_hint": "Để trống để tự động tạo từ tên",
+      "form_slug_placeholder": "VD: electronics, fashion",
+      "form_description": "Mô tả",
+      "form_description_placeholder": "Mô tả ngắn về danh mục này",
+      "form_image": "URL hình ảnh danh mục",
+      "form_status": "Trạng thái",
+      "form_image_invalid": "Phải là URL hợp lệ",
+      "create_success": "Tạo danh mục thành công",
+      "edit_success": "Cập nhật danh mục thành công",
+      "save_changes": "Lưu thay đổi",
+      "create": "Tạo",
+      "delete_title": "Xóa danh mục",
+      "delete": "Xóa"
+    }
   }
 }
