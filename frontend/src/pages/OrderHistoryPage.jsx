@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { orderApi } from '../services/orderApi';
 import { getProducts } from '../services/api';
-import { Spin, Modal, message, Tag } from 'antd';
+import { Spin, Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next'
 import CatalogProductCard from '../components/common/CatalogProductCard';
 
@@ -71,7 +71,7 @@ const OrderHistoryPage = () => {
       await orderApi.cancelOrder(orderId);
       message.success('Đã hủy đơn hàng thành công');
       fetchOrders();
-    } catch (err) {
+    } catch {
       message.error('Không thể hủy đơn hàng');
     }
   };
