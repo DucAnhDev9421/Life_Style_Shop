@@ -135,7 +135,7 @@ async function updateProfile(userId, data) {
   const user = await User.findByIdAndUpdate(
     userId,
     { $set: data },
-    { new: true, runValidators: true }
+    { returnDocument: 'after', runValidators: true }
   )
   return toPublicUser(user)
 }
