@@ -10,4 +10,19 @@ export const authApi = {
     const response = await api.post('/auth/register', userData);
     return response.data;
   },
+
+  verify: async () => {
+    const response = await api.get('/auth/verify');
+    return response.data;
+  },
+
+  updateProfile: async (profileData) => {
+    const response = await api.patch('/auth/profile', profileData);
+    return response.data;
+  },
+
+  changePassword: async (passwordData) => {
+    const response = await api.post('/auth/change-password', passwordData);
+    return response.data;
+  }
 };
