@@ -29,4 +29,16 @@ function requireAuth(req, _res, next) {
   }
 }
 
-module.exports = { requireAuth }
+function requireRoles(...allowedRoles) {
+  return (req, _res, next) => {
+    if (!req.user) {
+      return next(new AppError('Authentication required', 401, 'UNAUTHORIZED'))
+    }
+    if (!allowedRoles.includes(req.user.role)) {
+      return next(new AppError('Forbidden', 403, 'FORBIDDEN'))
+    }
+    return next()
+  }
+}
+
+module.exports = { requireAuth, requireRoles }
