@@ -2,27 +2,9 @@ import { Link } from 'react-router-dom'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { formatVndAmount } from '../../utils/formatVnd'
-
-const STORAGE_KEY = 'lss_wishlist_ids'
-
-function readWishlistIds() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) {
-      const parsed = JSON.parse(raw)
-      if (Array.isArray(parsed) && parsed.every((x) => typeof x === 'number')) {
-        return parsed
-      }
-    }
-  } catch {
-    /* ignore */
-  }
-  return []
-}
-
-function writeWishlistIds(ids) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
-}
+import { useDispatch, useSelector } from 'react-redux'
+import { addToWishlist, removeFromWishlist } from '../../store/wishlistSlice'
+import toast from 'react-hot-toast'
 
 /**
  * Thẻ sản phẩm kiểu Figma: ảnh, tên, size, giá VNĐ, tim góc dưới phải.
@@ -31,14 +13,16 @@ function writeWishlistIds(ids) {
 const CatalogProductCard = ({
   product,
   mode = 'catalog',
-  onWishlistChange,
   onRemoveFromWishlist,
 }) => {
   const { t, i18n } = useTranslation()
-  
-  // Real API data properties
-  const name = product.name
-  const priceStr = formatVndAmount(product.price, i18n.language)
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+  const { items: wishIds } = useSelector((state) => state.wishlist) || { items: [] }
+
+  // Real API data properties or fallback if it's mock
+  const name = product.name || t(`listing.catalog_items.${product.catalogItemId}.name`)
+  const priceStr = formatVndAmount(product.price || product.priceVnd, i18n.language)
   const priceLabel = t('listing.price_line', { value: priceStr })
   
   // Use product.category or description as subtitle
@@ -47,20 +31,27 @@ const CatalogProductCard = ({
   const inWishlist =
     mode === 'wishlist'
       ? true
-      : readWishlistIds().includes(product.id)
+      : (wishIds || []).some(item => (item._id || item.id || item) === product.id)
 
   const handleHeartClick = (e) => {
     e.preventDefault()
     e.stopPropagation()
+
+    if (!user) {
+      toast.error(t('auth.login_required', 'Vui lòng đăng nhập để dùng chức năng yêu thích'))
+      return
+    }
+
     if (mode === 'wishlist' && onRemoveFromWishlist) {
       onRemoveFromWishlist()
       return
     }
-    const ids = readWishlistIds()
-    const has = ids.includes(product.id)
-    const next = has ? ids.filter((i) => i !== product.id) : [...ids, product.id]
-    writeWishlistIds(next)
-    onWishlistChange?.()
+
+    if (inWishlist) {
+      dispatch(removeFromWishlist(product.id))
+    } else {
+      dispatch(addToWishlist(product.id))
+    }
   }
 
   return (

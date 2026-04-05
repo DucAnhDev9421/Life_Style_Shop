@@ -11,6 +11,7 @@ import ProductDetailPage from './pages/ProductDetailPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ProfilePage from './pages/ProfilePage'
+import OrderHistoryPage from './pages/OrderHistoryPage'
 import { Toaster } from 'react-hot-toast'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
@@ -27,8 +28,10 @@ import {
   ShoppingCartOutlined,
   HeartOutlined,
   SearchOutlined,
+  ShoppingOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 import { useCart } from './context/useCart.js'
 import { AUTH_CHANGED_EVENT } from './utils/authEvents.js'
 
@@ -37,6 +40,9 @@ function App() {
   const { itemCount } = useCart()
   const navigate = useNavigate()
   const [headerQ, setHeaderQ] = useState('')
+  const user = localStorage.getItem('user');
+  const location = useLocation()
+
   /** Tick để re-render header sau login/logout cùng tab (đồng bộ với nhánh xác thực). */
   const [, setAuthTick] = useState(0)
 
@@ -80,7 +86,7 @@ function App() {
         },
       }}
     >
-      <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] transition-colors duration-500">
+      <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] transition-colors duration-500 pb-10">
         <header className="sticky top-0 z-50 bg-[#0071e3]/95 backdrop-blur-md shadow-lg shadow-blue-900/10 border-b border-white/10 transition-all duration-300">
           <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-18 py-3">
             {/* Brand Logo */}
@@ -118,8 +124,11 @@ function App() {
               </div>
 
               <div className="flex gap-5 items-center">
-                <Link to="/wishlist" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
+                <Link to="/wishlist" title={t('listing.wishlist_title')} className="transition-all hover:text-white hover:scale-110 relative text-white/80">
                   <HeartOutlined className="text-[19px]" />
+                </Link>
+                <Link to="/orders" title="Lịch sử đơn hàng" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
+                  <ShoppingOutlined className="text-[19px]" />
                 </Link>
                 <Link to="/cart" className="transition-all hover:text-white hover:scale-110 flex items-center relative text-white/80 group">
                   <ShoppingCartOutlined className="text-[19px]" />
@@ -127,7 +136,7 @@ function App() {
                     {itemCount > 99 ? '99+' : itemCount}
                   </span>
                 </Link>
-                <Link to={isLoggedIn ? "/profile" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
+                <Link to={isLoggedIn ? "/profile" : "/login"} title={isLoggedIn ? "Tài khoản" : "Đăng nhập"} className="transition-all hover:text-white hover:scale-110 text-white/80">
                   <UserOutlined className="text-[19px]" />
                 </Link>
                 <div className="h-4 w-px bg-white/20 mx-1" />
@@ -157,6 +166,7 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/orders" element={<OrderHistoryPage />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboardPage />} />
               <Route path="analytics" element={<AdminAnalyticsPage />} />

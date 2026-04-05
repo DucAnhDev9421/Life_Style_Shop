@@ -5,6 +5,8 @@ import { ShoppingCartOutlined, HeartOutlined, ArrowLeftOutlined } from '@ant-des
 import { useTranslation } from 'react-i18next'
 import { getProductById } from '../services/api'
 import { formatVndAmount } from '../utils/formatVnd'
+import { useCart } from '../context/useCart'
+import toast from 'react-hot-toast'
 
 function ProductDetailPage() {
   const { id } = useParams()
@@ -13,6 +15,8 @@ function ProductDetailPage() {
   const [loading, setLoading] = useState(true)
   const [activeImage, setActiveImage] = useState(0)
   const [qty, setQty] = useState(1)
+  const [adding, setAdding] = useState(false)
+  const { addItem } = useCart()
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -138,6 +142,18 @@ function ProductDetailPage() {
               type="primary"
               size="large"
               icon={<ShoppingCartOutlined />}
+              loading={adding}
+              onClick={async () => {
+                setAdding(true)
+                try {
+                  await addItem(product._id || product.id, qty)
+                  toast.success(t('productDetail.add_cart_success', 'Đã thêm vào giỏ hàng'))
+                } catch (err) {
+                  toast.error(t('productDetail.add_cart_error', 'Không thể thêm vào giỏ'))
+                } finally {
+                  setAdding(false)
+                }
+              }}
               className="h-12 min-w-[200px] !rounded-full font-semibold shadow-lg shadow-blue-500/20"
             >
               {t('productDetail.add_cart')}

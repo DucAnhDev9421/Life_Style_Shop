@@ -36,7 +36,11 @@ const ProductListPage = () => {
       setLoading(true)
       try {
         const payload = await getProducts()
-        setProducts(payload.data.items)
+        const items = (payload.data.items || []).map(p => ({
+          ...p,
+          id: p._id || p.id
+        }));
+        setProducts(items)
       } catch (e) {
         console.error('Failed to fetch', e)
       } finally {
