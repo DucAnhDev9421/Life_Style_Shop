@@ -322,5 +322,103 @@
     "terms": "Terms of Use",
     "sales": "Sales Policy",
     "legal": "Legal"
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "categories": "Categories",
+      "orders": "Orders",
+      "users": "Users",
+      "analytics": "Analytics",
+      "management": "Management",
+      "settings": "Settings",
+      "logout": "Sign Out"
+    },
+    "dashboard": {
+      "title": "Overview",
+      "subtitle": "Monitor your store performance at a glance",
+      "add_product": "Add Product",
+      "recent_products": "Recent Products",
+      "top_categories": "Top Categories",
+      "view_all": "View All",
+      "no_products": "No products yet",
+      "no_categories": "No categories yet",
+      "products": "products"
+    },
+    "stats": {
+      "total_products": "Total Products",
+      "total_users": "Total Users",
+      "active_products": "Active Products",
+      "out_of_stock": "Out of Stock",
+      "vs_last_month": "vs last month"
+    },
+    "products": {
+      "title": "Products",
+      "subtitle": "Manage your product inventory",
+      "add": "Add Product",
+      "search_placeholder": "Search products...",
+      "items": "items",
+      "empty": "No products found",
+      "delete_confirm_title": "Delete Product",
+      "delete": "Delete",
+      "modal_create_title": "New Product",
+      "modal_edit_title": "Edit Product",
+      "save_changes": "Save Changes",
+      "create_success": "Product created successfully",
+      "edit_success": "Product updated successfully"
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "Track and manage all customer orders",
+      "search_placeholder": "Search orders, customers...",
+      "empty": "No orders found"
+    },
+    "users": {
+      "title": "Users",
+      "subtitle": "Manage user accounts, roles, and access",
+      "search_placeholder": "Search by name or email...",
+      "empty": "No users found"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Insights into your store growth and performance",
+      "monthly_growth": "Monthly Growth",
+      "monthly_growth_desc": "New users and products added over the last 12 months",
+      "product_status": "Product Status Breakdown",
+      "product_status_desc": "Distribution of products by their current status",
+      "top_categories": "Top Categories",
+      "top_categories_desc": "Product count by category",
+      "no_data": "No data available yet"
+    },
+    "categories": {
+      "title": "Categories",
+      "subtitle": "Organize your products into categories",
+      "add": "Add Category",
+      "search_placeholder": "Search categories...",
+      "items": "categories",
+      "empty": "No categories found",
+      "empty_create": "Create your first category",
+      "modal_create_title": "New Category",
+      "modal_edit_title": "Edit Category",
+      "form_name": "Category Name",
+      "form_name_required": "Category name is required",
+      "form_name_placeholder": "e.g. Electronics, Fashion, Sports",
+      "form_slug": "Slug",
+      "form_slug_invalid": "Only lowercase letters, numbers and hyphens",
+      "form_slug_hint": "Leave blank to auto-generate from name",
+      "form_slug_placeholder": "e.g. electronics, fashion",
+      "form_description": "Description",
+      "form_description_placeholder": "Brief description of this category",
+      "form_image": "Category Image URL",
+      "form_status": "Status",
+      "form_image_invalid": "Must be a valid URL",
+      "create_success": "Category created successfully",
+      "edit_success": "Category updated successfully",
+      "save_changes": "Save Changes",
+      "create": "Create",
+      "delete_title": "Delete Category",
+      "delete": "Delete"
+    }
   }
 }
