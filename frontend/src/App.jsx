@@ -31,7 +31,6 @@ import {
   ShoppingOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
 import { useCart } from './context/useCart.js'
 import { AUTH_CHANGED_EVENT } from './utils/authEvents.js'
 
@@ -40,10 +39,6 @@ function App() {
   const { itemCount } = useCart()
   const navigate = useNavigate()
   const [headerQ, setHeaderQ] = useState('')
-  const user = localStorage.getItem('user');
-  const location = useLocation()
-
-  /** Tick để re-render header sau login/logout cùng tab (đồng bộ với nhánh xác thực). */
   const [, setAuthTick] = useState(0)
 
   useEffect(() => {

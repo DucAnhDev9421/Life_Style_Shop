@@ -12,7 +12,6 @@ const WishlistPage = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const wishlistState = useSelector((state) => state.wishlist) || {}
-  const wishIds = wishlistState.items || []
   const loading = wishlistState.loading
   const { user } = useSelector((state) => state.auth) || {}
 
@@ -22,13 +21,12 @@ const WishlistPage = () => {
     }
   }, [dispatch, user])
 
-  const products = useMemo(() => 
-    wishIds?.map(item => ({
+  const products = useMemo(() => {
+    return (wishlistState.items || []).map(item => ({
       ...item,
       id: item._id || item.id
-    })) || [],
-    [wishIds]
-  )
+    }))
+  }, [wishlistState.items])
 
   return (
     <div className="bg-white min-h-screen pb-6">

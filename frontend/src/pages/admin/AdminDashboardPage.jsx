@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { adminApi } from '../../services/adminApi'
 import { formatVndAmount } from '../../utils/formatVnd'
 
+// eslint-disable-next-line no-unused-vars
 function StatCard({ icon: Icon, label, value, trend, trendLabel, color, loading }) {
-  const { i18n } = useTranslation()
   const isPositive = trend > 0
 
   if (loading) {

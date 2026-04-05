@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Button, InputNumber, Spin } from 'antd'
 import { ShoppingCartOutlined, HeartOutlined, ArrowLeftOutlined } from '@ant-design/icons'
@@ -148,7 +148,7 @@ function ProductDetailPage() {
                 try {
                   await addItem(product._id || product.id, qty)
                   toast.success(t('productDetail.add_cart_success', 'Đã thêm vào giỏ hàng'))
-                } catch (err) {
+                } catch {
                   toast.error(t('productDetail.add_cart_error', 'Không thể thêm vào giỏ'))
                 } finally {
                   setAdding(false)
