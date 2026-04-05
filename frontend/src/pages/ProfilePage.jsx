@@ -6,6 +6,7 @@ import { authApi } from '../services/authApi'
 import Sidebar from './profile/Sidebar'
 import GeneralTab from './profile/GeneralTab'
 import SecurityTab from './profile/SecurityTab'
+import { notifyAuthChanged } from '../utils/authEvents'
 
 export default function ProfilePage() {
   const navigate = useNavigate()
@@ -32,6 +33,14 @@ export default function ProfilePage() {
     setUser(updatedUser)
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    notifyAuthChanged()
+    navigate('/')
+    toast.success('Logged out successfully')
+  }
+
   if (authLoading) {
     return (
       <div className="flex justify-center items-center min-h-[calc(100vh-80px)]">
@@ -53,7 +62,12 @@ export default function ProfilePage() {
 
         <div className="flex flex-col md:flex-row gap-8">
 
-          <Sidebar user={user} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Sidebar 
+            user={user} 
+            activeTab={activeTab} 
+            setActiveTab={setActiveTab} 
+            onLogout={handleLogout}
+          />
 
           <div className="flex-1 min-w-0">
             {activeTab === 'general' && <GeneralTab user={user} onUpdate={handleProfileUpdate} />}

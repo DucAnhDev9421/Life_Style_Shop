@@ -75,6 +75,7 @@ class OrderController {
         data: newOrder
       })
     } catch (err) {
+      console.error('[OrderController] createOrder Error:', err)
       next(err)
     }
   }

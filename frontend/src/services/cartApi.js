@@ -13,7 +13,7 @@ export function mapCartResponseToLines(payload) {
   if (!Array.isArray(raw)) return []
   return raw.map((row) => ({
     cartItemId: String(row.cartItemId ?? row._id ?? row.id),
-    productId: row.productId ?? row.product?.id,
+    productId: row.productId ?? row.product?._id ?? row.product?.id ?? row.product,
     catalogItemId: row.catalogItemId ?? row.product?.catalogItemId ?? null,
     quantity: Math.max(0, Number(row.quantity) || 0),
     unitPriceVnd: Number(row.unitPriceVnd ?? row.priceSnapshot ?? row.unitPrice ?? 0),
