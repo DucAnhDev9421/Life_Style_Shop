@@ -10,6 +10,7 @@ import ProductDetailPage from './pages/ProductDetailPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ProfilePage from './pages/ProfilePage'
+import OrderHistoryPage from './pages/OrderHistoryPage'
 import { Toaster } from 'react-hot-toast'
 import { ConfigProvider, Input } from 'antd'
 import {
@@ -19,12 +20,15 @@ import {
   SearchOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 
 function App() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const [headerQ, setHeaderQ] = useState('')
   const user = localStorage.getItem('user');
+  const location = useLocation()
+  const isStandalonePage = ['/orders', '/wishlist'].includes(location.pathname)
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'vi' : 'en'
@@ -58,7 +62,13 @@ function App() {
         },
       }}
     >
-      <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] transition-colors duration-500">
+      {isStandalonePage ? (
+        <Routes>
+          <Route path="/orders" element={<OrderHistoryPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
+        </Routes>
+      ) : (
+      <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] transition-colors duration-500 pb-10">
         <header className="sticky top-0 z-50 bg-[#0071e3]/95 backdrop-blur-md shadow-lg shadow-blue-900/10 border-b border-white/10 transition-all duration-300">
           <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-18 py-3">
             {/* Brand Logo */}
@@ -99,6 +109,9 @@ function App() {
                 <Link to="/wishlist" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
                   <HeartOutlined className="text-[19px]" />
                 </Link>
+                <Link to="/orders" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
+                  <UserOutlined className="text-[19px]" />
+                </Link>
                 <Link to="/cart" className="transition-all hover:text-white hover:scale-110 flex items-center relative text-white/80 group">
                   <ShoppingCartOutlined className="text-[19px]" />
                   <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-white text-[9px] font-black text-[#0071e3] shadow-sm">
@@ -137,6 +150,7 @@ function App() {
           <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
         </main>
       </div>
+      )}
     </ConfigProvider>
   )
 }
