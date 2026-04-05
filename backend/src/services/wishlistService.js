@@ -3,7 +3,7 @@ const AppError = require('../utils/AppError')
 
 class WishlistService {
   async getWishlist(userId) {
-    const user = await User.findById(userId).lean()
+    const user = await User.findById(userId).populate('wishlist').lean()
     if (!user) throw new AppError('User not found', 404, 'USER_NOT_FOUND')
     return user.wishlist
   }
@@ -17,6 +17,7 @@ class WishlistService {
       await user.save()
     }
     
+    await user.populate('wishlist')
     return user.wishlist
   }
 
@@ -24,10 +25,10 @@ class WishlistService {
     const user = await User.findById(userId)
     if (!user) throw new AppError('User not found', 404, 'USER_NOT_FOUND')
 
-    const pId = Number(productId)
-    user.wishlist = user.wishlist.filter(id => id !== pId)
+    user.wishlist = user.wishlist.filter(id => id.toString() !== productId.toString())
     await user.save()
 
+    await user.populate('wishlist')
     return user.wishlist
   }
 }

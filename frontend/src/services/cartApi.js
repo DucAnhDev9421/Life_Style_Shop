@@ -60,3 +60,15 @@ export async function removeCartItem(cartItemId) {
     throw err
   }
 }
+/**
+ * POST — thêm sản phẩm (mới hoặc tăng số lượng nếu đã có).
+ */
+export async function addToCartApi(productId, quantity = 1) {
+  try {
+    const { data } = await api.post('/cart', { productId, quantity })
+    return mapCartResponseToLines(data.data)
+  } catch (err) {
+    if (err.response?.status === 404) return []
+    throw err
+  }
+}

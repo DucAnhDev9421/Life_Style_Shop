@@ -8,67 +8,81 @@ import {
   LoadingOutlined
 } from '@ant-design/icons';
 import { orderApi } from '../services/orderApi';
-import { Spin } from 'antd';
+import { getProducts } from '../services/api';
+import { Spin, Modal, message, Tag } from 'antd';
+import { useTranslation } from 'react-i18next'
+import CatalogProductCard from '../components/common/CatalogProductCard';
 
 const OrderHistoryPage = () => {
+  const { t } = useTranslation()
   const [orders, setOrders] = useState([]);
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isDetailVisible, setIsDetailVisible] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const fetchOrders = async () => {
+    setLoading(true);
+    try {
+      const orderRes = await orderApi.getOrders();
+      const rawOrders = orderRes.data.data || [];
+      const formatted = rawOrders.map(o => {
+         let statusText = 'Đang xử lý';
+         let statusColor = 'bg-blue-100 text-blue-700';
+         let canCancel = o.status === 'pending' || o.status === 'processing';
+         
+         if (o.status === 'pending') { statusText = 'Chờ xác nhận'; statusColor = 'bg-yellow-100 text-yellow-700'; }
+         if (o.status === 'processing') { statusText = 'Đang xử lý'; statusColor = 'bg-blue-100 text-blue-700'; }
+         if (o.status === 'shipped') { statusText = 'Đang vận chuyển'; statusColor = 'bg-indigo-500 text-white'; }
+         if (o.status === 'delivered') { statusText = 'Đã giao'; statusColor = 'bg-green-100 text-green-700'; }
+         if (o.status === 'cancelled') { statusText = 'Đã hủy'; statusColor = 'bg-red-100 text-red-700'; }
+
+         return {
+            rawId: o._id,
+            id: '#' + o._id.substring(o._id.length - 8).toUpperCase(),
+            date: new Date(o.createdAt).toLocaleDateString('vi-VN', { day: '2-digit', month: 'long', year: 'numeric' }),
+            status: statusText,
+            total: o.totalAmount.toLocaleString('vi-VN') + ' ₫',
+            image: o.items[0]?.product?.thumbnail || o.items[0]?.product?.images?.[0] || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80',
+            statusColor,
+            canCancel,
+            items: o.items
+         };
+      });
+      setOrders(formatted);
+
+      // Fetch recommended products
+      const prodRes = await getProducts();
+      setRecommendedProducts(prodRes.data.items.slice(0, 2));
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    orderApi.getOrders()
-      .then(res => {
-        const rawOrders = res.data.data || [];
-        const formatted = rawOrders.map(o => {
-           let statusText = 'Đang xử lý';
-           let statusColor = 'bg-blue-100 text-blue-700';
-           
-           if (o.status === 'pending') { statusText = 'Chờ xác nhận'; statusColor = 'bg-yellow-100 text-yellow-700'; }
-           if (o.status === 'processing') { statusText = 'Đang xử lý'; statusColor = 'bg-blue-100 text-blue-700'; }
-           if (o.status === 'shipped') { statusText = 'Đang vận chuyển'; statusColor = 'bg-indigo-500 text-white'; }
-           if (o.status === 'delivered') { statusText = 'Đã giao'; statusColor = 'bg-green-100 text-green-700'; }
-           if (o.status === 'cancelled') { statusText = 'Đã hủy'; statusColor = 'bg-red-100 text-red-700'; }
-
-           return {
-              id: '#' + o._id.substring(o._id.length - 8).toUpperCase(),
-              date: new Date(o.createdAt).toLocaleDateString('vi-VN', { day: '2-digit', month: 'long', year: 'numeric' }),
-              status: statusText,
-              total: o.totalAmount.toLocaleString('vi-VN') + ' ₫',
-              image: o.items[0]?.product?.thumbnail || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80',
-              statusColor
-           };
-        });
-        setOrders(formatted);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+    fetchOrders();
   }, []);
 
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-['Inter',sans-serif]">
-      {/* Header */}
-      <header className="bg-[#2B5BFF] text-white py-4 px-8 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <Link to="/" className="text-xl font-bold tracking-wide">LifeStyle TECH</Link>
-          
-          <nav className="hidden md:flex gap-8 text-sm font-medium text-blue-50">
-            <a href="#" className="hover:text-white transition-colors">New Arrivals</a>
-            <a href="#" className="hover:text-white transition-colors">Categories</a>
-            <a href="#" className="hover:text-white transition-colors">Brands</a>
-            <a href="#" className="hover:text-white transition-colors">Offers</a>
-          </nav>
-          
-          <div className="flex gap-6 items-center">
-            <div className="relative cursor-pointer">
-              <ShoppingOutlined className="text-xl" />
-            </div>
-            <div className="relative group cursor-pointer pb-1">
-              <UserOutlined className="text-xl" />
-              <div className="absolute left-0 bottom-0 w-full h-[2px] bg-white translate-y-2"></div>
-            </div>
-          </div>
-        </div>
-      </header>
+  const handleCancelOrder = async (orderId) => {
+    try {
+      await orderApi.cancelOrder(orderId);
+      message.success('Đã hủy đơn hàng thành công');
+      fetchOrders();
+    } catch (err) {
+      message.error('Không thể hủy đơn hàng');
+    }
+  };
 
+  const showDetail = (order) => {
+    setSelectedOrder(order);
+    setIsDetailVisible(true);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#fbfbfd] flex flex-col font-['Inter',sans-serif]">
       {/* Main Content */}
       <main className="flex-1 w-full max-w-6xl mx-auto px-4 md:px-8 py-10">
         
@@ -126,9 +140,22 @@ const OrderHistoryPage = () => {
                       <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Tổng tiền</span>
                       <span className="font-bold text-indigo-700">{order.total}</span>
                     </div>
-                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap">
-                      Xem chi tiết
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={() => showDetail(order)}
+                        className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap"
+                      >
+                        {t('orders.view_detail', 'Chi tiết')}
+                      </button>
+                      {order.canCancel && (
+                        <button 
+                          onClick={() => handleCancelOrder(order.rawId)}
+                          className="bg-red-50 hover:bg-red-100 text-red-600 px-5 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap"
+                        >
+                          {t('orders.cancel', 'Hủy')}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -170,43 +197,9 @@ const OrderHistoryPage = () => {
               </div>
             </div>
 
-            {/* Small Product 1 */}
-            <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100 flex flex-col relative cursor-pointer group">
-              <div className="absolute top-4 right-4 z-10 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">
-                <HeartOutlined className="text-gray-500" />
-              </div>
-              <div className="h-48 w-full bg-[#f8f9fa] overflow-hidden flex items-center justify-center p-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80" 
-                  alt="Watch" 
-                  className="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500 rounded"
-                />
-              </div>
-              <div className="p-5">
-                <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Phụ kiện cao cấp</span>
-                <h4 className="font-bold text-gray-900 mt-1 mb-2 group-hover:text-blue-600 transition-colors">Đồng hồ Chronograph Silver</h4>
-                <div className="font-bold text-gray-900">1.890.000 ₫</div>
-              </div>
-            </div>
-
-            {/* Small Product 2 */}
-            <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100 flex flex-col relative cursor-pointer group">
-              <div className="absolute top-4 right-4 z-10 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">
-                <HeartOutlined className="text-gray-500" />
-              </div>
-              <div className="h-48 w-full bg-[#f4f5f6] overflow-hidden flex items-center justify-center p-2 relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80" 
-                  alt="Sneaker" 
-                  className="w-full h-full object-contain mix-blend-multiply group-hover:-translate-y-1 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-5 bg-white flex-1">
-                <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Giày thể thao</span>
-                <h4 className="font-bold text-gray-900 mt-1 mb-2 group-hover:text-blue-600 transition-colors">Sneaker Pro Max Scarlet</h4>
-                <div className="font-bold text-gray-900">2.150.000 ₫</div>
-              </div>
-            </div>
+            {recommendedProducts.map(p => (
+              <CatalogProductCard key={p._id} product={p} />
+            ))}
 
             {/* Medium Banner */}
             <div className="md:col-span-2 bg-[#E9EDFB] rounded-2xl overflow-hidden hover:shadow-md transition-all flex flex-col md:flex-row cursor-pointer group">
@@ -233,38 +226,57 @@ const OrderHistoryPage = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full bg-white border-t border-gray-100 py-10 mt-10">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
-            <h3 className="font-bold text-gray-900 mb-4">LifeStyle TECH</h3>
-            <p className="text-xs text-gray-500">
-              © 2024 LifeStyle TECH. Built for Digital Atrium.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4 text-sm">Hỗ trợ</h4>
-            <div className="flex flex-col gap-3 text-xs text-gray-500">
-              <a href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-blue-600 transition-colors">Terms of Service</a>
+      {/* Detail Modal */}
+      <Modal
+        title={`Chi tiết đơn hàng ${selectedOrder?.id}`}
+        open={isDetailVisible}
+        onCancel={() => setIsDetailVisible(false)}
+        footer={null}
+        width={700}
+      >
+        {selectedOrder && (
+          <div className="py-4">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+               <div>
+                 <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Trạng thái</p>
+                 <span className={`px-3 py-1 rounded-full text-xs font-bold ${selectedOrder.statusColor}`}>
+                   {selectedOrder.status}
+                 </span>
+               </div>
+               <div className="text-right">
+                 <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Ngày đặt</p>
+                 <p className="font-bold text-gray-900">{selectedOrder.date}</p>
+               </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              {selectedOrder.items.map((item, i) => (
+                <div key={i} className="flex gap-4 items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                  <img 
+                    src={item.product?.thumbnail || item.product?.images?.[0] || 'https://via.placeholder.com/60'} 
+                    alt={item.product?.name}
+                    className="w-16 h-16 object-cover rounded-lg bg-white shadow-sm"
+                  />
+                  <div className="flex-1">
+                    <h4 className="text-sm font-bold text-gray-900 line-clamp-1">{item.product?.name}</h4>
+                    <p className="text-xs text-gray-500">Số lượng: {item.quantity}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-indigo-600">{item.price.toLocaleString('vi-VN')} ₫</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-end p-4 bg-gray-50 rounded-2xl">
+              <div className="text-right">
+                <span className="text-sm text-gray-500 font-medium">Tổng thanh toán:</span>
+                <span className="ml-3 text-2xl font-black text-indigo-700">{selectedOrder.total}</span>
+              </div>
             </div>
           </div>
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4 text-sm">Giao hàng</h4>
-            <div className="flex flex-col gap-3 text-xs text-gray-500">
-              <a href="#" className="hover:text-blue-600 transition-colors">Shipping Info</a>
-              <a href="#" className="hover:text-blue-600 transition-colors">Returns</a>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4 text-sm">Liên hệ</h4>
-            <div className="flex flex-col gap-3 text-xs text-gray-500">
-              <a href="#" className="hover:text-blue-600 transition-colors">Contact Us</a>
-              <a href="#" className="text-blue-600 font-medium hover:underline transition-colors">Facebook</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+        )}
+      </Modal>
     </div>
   );
 };

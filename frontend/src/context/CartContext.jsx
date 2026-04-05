@@ -4,7 +4,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { fetchCart } from '../services/cartApi'
+import { fetchCart, addToCartApi } from '../services/cartApi'
 import { CartContext } from './cartContext.js'
 import {
   buildSeedLines,
@@ -136,6 +136,10 @@ export function CartProvider({ children }) {
       incrementLine,
       decrementLine,
       confirmRemoveLine,
+      addItem: async (productId, quantity) => {
+        const next = await addToCartApi(productId, quantity)
+        setLines(next)
+      },
       refreshCart,
       clearCart,
     }),

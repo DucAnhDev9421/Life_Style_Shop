@@ -18,7 +18,7 @@ const CatalogProductCard = ({
   const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
-  const { items: wishIds } = useSelector((state) => state.wishlist)
+  const { items: wishIds } = useSelector((state) => state.wishlist) || { items: [] }
 
   // Real API data properties or fallback if it's mock
   const name = product.name || t(`listing.catalog_items.${product.catalogItemId}.name`)
@@ -31,7 +31,7 @@ const CatalogProductCard = ({
   const inWishlist =
     mode === 'wishlist'
       ? true
-      : wishIds.includes(product.id)
+      : (wishIds || []).some(item => (item._id || item.id || item) === product.id)
 
   const handleHeartClick = (e) => {
     e.preventDefault()

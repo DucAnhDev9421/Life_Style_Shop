@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema(
     },
     isEmailVerified: { type: Boolean, default: false },
     wishlist: [{
-      type: Number
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
     }],
     lastLoginAt: { type: Date, default: null },
     refreshTokenHash: { type: String, default: null, select: false },

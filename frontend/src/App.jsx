@@ -21,6 +21,7 @@ import {
   ShoppingCartOutlined,
   HeartOutlined,
   SearchOutlined,
+  ShoppingOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
@@ -34,7 +35,6 @@ function App() {
   const [headerQ, setHeaderQ] = useState('')
   const user = localStorage.getItem('user');
   const location = useLocation()
-  const isStandalonePage = ['/orders', '/wishlist'].includes(location.pathname)
 
   /** Tick để re-render header sau login/logout cùng tab (đồng bộ với nhánh xác thực). */
   const [, setAuthTick] = useState(0)
@@ -79,12 +79,6 @@ function App() {
         },
       }}
     >
-      {isStandalonePage ? (
-        <Routes>
-          <Route path="/orders" element={<OrderHistoryPage />} />
-          <Route path="/wishlist" element={<WishlistPage />} />
-        </Routes>
-      ) : (
       <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] transition-colors duration-500 pb-10">
         <header className="sticky top-0 z-50 bg-[#0071e3]/95 backdrop-blur-md shadow-lg shadow-blue-900/10 border-b border-white/10 transition-all duration-300">
           <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-18 py-3">
@@ -123,11 +117,11 @@ function App() {
               </div>
 
               <div className="flex gap-5 items-center">
-                <Link to="/wishlist" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
+                <Link to="/wishlist" title={t('listing.wishlist_title')} className="transition-all hover:text-white hover:scale-110 relative text-white/80">
                   <HeartOutlined className="text-[19px]" />
                 </Link>
-                <Link to="/orders" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
-                  <UserOutlined className="text-[19px]" />
+                <Link to="/orders" title="Lịch sử đơn hàng" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
+                  <ShoppingOutlined className="text-[19px]" />
                 </Link>
                 <Link to="/cart" className="transition-all hover:text-white hover:scale-110 flex items-center relative text-white/80 group">
                   <ShoppingCartOutlined className="text-[19px]" />
@@ -135,7 +129,7 @@ function App() {
                     {itemCount > 99 ? '99+' : itemCount}
                   </span>
                 </Link>
-                <Link to={isLoggedIn ? "/profile" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
+                <Link to={isLoggedIn ? "/profile" : "/login"} title={isLoggedIn ? "Tài khoản" : "Đăng nhập"} className="transition-all hover:text-white hover:scale-110 text-white/80">
                   <UserOutlined className="text-[19px]" />
                 </Link>
                 <div className="h-4 w-px bg-white/20 mx-1" />
@@ -170,7 +164,6 @@ function App() {
           <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
         </main>
       </div>
-      )}
     </ConfigProvider>
   )
 }

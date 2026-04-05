@@ -2,6 +2,8 @@ import api from './api';
 
 export const orderApi = {
   getOrders: () => api.get('/orders'),
+  getOrderById: (id) => api.get(`/orders/${id}`),
+  cancelOrder: (id) => api.patch(`/orders/${id}/cancel`),
 };
 
 /**

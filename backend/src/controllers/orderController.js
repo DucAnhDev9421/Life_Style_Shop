@@ -47,6 +47,73 @@ class OrderController {
       next(err)
     }
   }
+
+  async createOrder(req, res, next) {
+    try {
+      const { customer, paymentMethod, items, pricing } = req.body
+
+      const orderItems = items.map(item => ({
+        product: item.productId,
+        quantity: item.quantity,
+        price: item.unitPriceVnd
+      }))
+
+      const newOrder = await Order.create({
+        user: req.user.id,
+        items: orderItems,
+        totalAmount: pricing.totalVnd,
+        paymentMethod,
+        shippingAddress: {
+          fullName: customer.fullName,
+          phone: customer.phone,
+          address: customer.address
+        }
+      })
+
+      res.status(201).json({
+        success: true,
+        data: newOrder
+      })
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  async getOrderById(req, res, next) {
+    try {
+      const order = await Order.findOne({ _id: req.params.id, user: req.user.id })
+        .populate('items.product')
+      
+      if (!order) {
+        return res.status(404).json({ success: false, message: 'Order not found' })
+      }
+
+      res.status(200).json({ success: true, data: order })
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  async cancelOrder(req, res, next) {
+    try {
+      const order = await Order.findOne({ _id: req.params.id, user: req.user.id })
+      
+      if (!order) {
+        return res.status(404).json({ success: false, message: 'Order not found' })
+      }
+
+      if (order.status !== 'pending' && order.status !== 'processing') {
+        return res.status(400).json({ success: false, message: 'Cannot cancel order in current status' })
+      }
+
+      order.status = 'cancelled'
+      await order.save()
+
+      res.status(200).json({ success: true, data: order })
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = new OrderController()

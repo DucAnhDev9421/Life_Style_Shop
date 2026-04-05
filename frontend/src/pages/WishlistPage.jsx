@@ -11,8 +11,10 @@ import { useTranslation } from 'react-i18next'
 const WishlistPage = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const { items: wishIds, loading } = useSelector((state) => state.wishlist)
-  const { user } = useSelector((state) => state.auth)
+  const wishlistState = useSelector((state) => state.wishlist) || {}
+  const wishIds = wishlistState.items || []
+  const loading = wishlistState.loading
+  const { user } = useSelector((state) => state.auth) || {}
 
   useEffect(() => {
     if (user) {
@@ -20,8 +22,11 @@ const WishlistPage = () => {
     }
   }, [dispatch, user])
 
-  const products = useMemo(
-    () => MOCK_PRODUCTS.filter((p) => wishIds.includes(p.id)),
+  const products = useMemo(() => 
+    wishIds?.map(item => ({
+      ...item,
+      id: item._id || item.id
+    })) || [],
     [wishIds]
   )
 
