@@ -24,7 +24,8 @@ class WishlistService {
     const user = await User.findById(userId)
     if (!user) throw new AppError('User not found', 404, 'USER_NOT_FOUND')
 
-    user.wishlist = user.wishlist.filter(id => id !== productId)
+    const pId = Number(productId)
+    user.wishlist = user.wishlist.filter(id => id !== pId)
     await user.save()
 
     return user.wishlist

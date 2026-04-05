@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -13,6 +13,8 @@ import RegisterPage from './pages/RegisterPage'
 import ProfilePage from './pages/ProfilePage'
 import OrderHistoryPage from './pages/OrderHistoryPage'
 import { Toaster } from 'react-hot-toast'
+import CartPage from './pages/CartPage'
+import CheckoutPage from './pages/CheckoutPage'
 import { ConfigProvider, Input } from 'antd'
 import {
   UserOutlined,
@@ -22,14 +24,28 @@ import {
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
+import { useCart } from './context/useCart.js'
+import { AUTH_CHANGED_EVENT } from './utils/authEvents.js'
 
 function App() {
   const { t, i18n } = useTranslation()
+  const { itemCount } = useCart()
   const navigate = useNavigate()
   const [headerQ, setHeaderQ] = useState('')
   const user = localStorage.getItem('user');
   const location = useLocation()
   const isStandalonePage = ['/orders', '/wishlist'].includes(location.pathname)
+
+  /** Tick để re-render header sau login/logout cùng tab (đồng bộ với nhánh xác thực). */
+  const [, setAuthTick] = useState(0)
+
+  useEffect(() => {
+    const bump = () => setAuthTick((n) => n + 1)
+    window.addEventListener(AUTH_CHANGED_EVENT, bump)
+    return () => window.removeEventListener(AUTH_CHANGED_EVENT, bump)
+  }, [])
+
+  const isLoggedIn = Boolean(localStorage.getItem('token'))
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'vi' : 'en'
@@ -116,10 +132,10 @@ function App() {
                 <Link to="/cart" className="transition-all hover:text-white hover:scale-110 flex items-center relative text-white/80 group">
                   <ShoppingCartOutlined className="text-[19px]" />
                   <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-white text-[9px] font-black text-[#0071e3] shadow-sm">
-                    0
+                    {itemCount > 99 ? '99+' : itemCount}
                   </span>
                 </Link>
-                <Link to={user ? "/profile" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
+                <Link to={isLoggedIn ? "/profile" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
                   <UserOutlined className="text-[19px]" />
                 </Link>
                 <div className="h-4 w-px bg-white/20 mx-1" />
@@ -147,6 +163,8 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <Toaster position="top-right" toastOptions={{ duration: 4000 }} />

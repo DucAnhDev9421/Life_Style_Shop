@@ -1,34 +1,31 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useDispatch } from 'react-redux';
-import toast from 'react-hot-toast';
-import { User, Phone, Image, Mail, Save, Loader2 } from 'lucide-react';
-import { updateProfile } from '../../store/authSlice';
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import toast from 'react-hot-toast'
+import { User, Phone, Image, Mail, Save, Loader2 } from 'lucide-react'
+import { authApi } from '../../services/authApi'
 
 const generalSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters").max(50, "Full name is too long"),
-  phone: z.string().regex(/^\d{10,11}$/, "Phone number must be 10-11 digits").optional().or(z.literal("")),
-  avatarUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
-});
+  phone: z.string().regex(/^\d{10,11}$/, "Phone number must be 10-11 digits").optional().or(z.literal('')),
+  avatarUrl: z.string().url("Must be a valid URL").optional().or(z.literal('')),
+})
 
-export default function GeneralTab({ user }) {
-  const dispatch = useDispatch();
-
-  const { 
-    register, 
-    handleSubmit, 
+export default function GeneralTab({ user, onUpdate }) {
+  const {
+    register,
+    handleSubmit,
     reset,
-    formState: { errors, isSubmitting, isDirty } 
+    formState: { errors, isSubmitting, isDirty },
   } = useForm({
     resolver: zodResolver(generalSchema),
     defaultValues: {
       fullName: user?.fullName || '',
       phone: user?.phone || '',
       avatarUrl: user?.avatarUrl || '',
-    }
-  });
+    },
+  })
 
   useEffect(() => {
     if (user) {
@@ -36,19 +33,20 @@ export default function GeneralTab({ user }) {
         fullName: user.fullName || '',
         phone: user.phone || '',
         avatarUrl: user.avatarUrl || '',
-      });
+      })
     }
-  }, [user, reset]);
+  }, [user, reset])
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(updateProfile(data)).unwrap();
-      toast.success('General profile updated successfully');
-      reset(data);
+      const result = await authApi.updateProfile(data)
+      toast.success('General profile updated successfully')
+      reset(data)
+      if (onUpdate) onUpdate(result.data.user)
     } catch (err) {
-      toast.error(err || 'Failed to update profile');
+      toast.error(err?.response?.data?.message || 'Failed to update profile')
     }
-  };
+  }
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-[#e5e5ea] overflow-hidden animate-fade-in-up">
@@ -66,7 +64,7 @@ export default function GeneralTab({ user }) {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Mail className="w-5 h-5 text-[#86868b]" />
                 </div>
-                <input 
+                <input
                   type="email"
                   value={user?.email || ''}
                   readOnly
@@ -81,8 +79,8 @@ export default function GeneralTab({ user }) {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="w-5 h-5 text-[#86868b]" />
                 </div>
-                <input 
-                  {...register("fullName")}
+                <input
+                  {...register('fullName')}
                   className={`w-full pl-10 pr-3 py-2.5 rounded-xl border ${errors.fullName ? 'border-red-500 bg-red-50' : 'border-[#d2d2d7] bg-[#fbfbfd]'} focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all`}
                   placeholder="John Doe"
                 />
@@ -96,8 +94,8 @@ export default function GeneralTab({ user }) {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Phone className="w-5 h-5 text-[#86868b]" />
                 </div>
-                <input 
-                  {...register("phone")}
+                <input
+                  {...register('phone')}
                   className={`w-full pl-10 pr-3 py-2.5 rounded-xl border ${errors.phone ? 'border-red-500 bg-red-50' : 'border-[#d2d2d7] bg-[#fbfbfd]'} focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all`}
                   placeholder="1234567890"
                 />
@@ -111,8 +109,8 @@ export default function GeneralTab({ user }) {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Image className="w-5 h-5 text-[#86868b]" />
                 </div>
-                <input 
-                  {...register("avatarUrl")}
+                <input
+                  {...register('avatarUrl')}
                   className={`w-full pl-10 pr-3 py-2.5 rounded-xl border ${errors.avatarUrl ? 'border-red-500 bg-red-50' : 'border-[#d2d2d7] bg-[#fbfbfd]'} focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all`}
                   placeholder="https://example.com/avatar.jpg"
                 />
@@ -134,5 +132,5 @@ export default function GeneralTab({ user }) {
         </form>
       </div>
     </div>
-  );
+  )
 }

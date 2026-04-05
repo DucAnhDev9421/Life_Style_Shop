@@ -35,6 +35,16 @@ async function getById(req, res, next) {
   }
 }
 
+async function getBySlug(req, res, next) {
+  try {
+    const { slug } = req.params
+    const product = await productService.getProductBySlugPublic(slug)
+    res.status(200).json({ success: true, data: { product } })
+  } catch (e) {
+    return next(e)
+  }
+}
+
 async function create(req, res, next) {
   try {
     const body = createProductSchema.parse(req.body)
@@ -81,6 +91,7 @@ async function remove(req, res, next) {
 module.exports = {
   list,
   getById,
+  getBySlug,
   create,
   update,
   remove,

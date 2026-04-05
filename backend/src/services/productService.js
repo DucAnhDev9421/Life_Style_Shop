@@ -19,6 +19,19 @@ function slugify(text) {
 function toPublicProduct(doc) {
   if (!doc) return null
   const o = doc.toObject ? doc.toObject() : doc
+  
+  let seller = o.seller
+  if (o.seller && typeof o.seller === 'object' && o.seller._id) {
+    seller = {
+      id: o.seller._id.toString(),
+      fullName: o.seller.fullName,
+      email: o.seller.email,
+      avatarUrl: o.seller.avatarUrl,
+    }
+  } else if (o.seller) {
+    seller = o.seller.toString()
+  }
+
   return {
     id: o._id.toString(),
     name: o.name,
@@ -29,7 +42,7 @@ function toPublicProduct(doc) {
     images: o.images,
     category: o.category,
     status: o.status,
-    seller: o.seller?.toString?.() ?? String(o.seller),
+    seller: seller,
     createdAt: o.createdAt,
     updatedAt: o.updatedAt,
   }
@@ -84,7 +97,17 @@ async function listProductsPublic(query) {
 
 async function getProductByIdPublic(id) {
   assertObjectId(id)
-  const doc = await Product.findOne({ _id: id, status: 'active' }).lean()
+  const doc = await Product.findOne({ _id: id, status: 'active' })
+    .populate('seller', 'fullName email avatarUrl')
+    .lean()
+  if (!doc) throw new AppError('Product not found', 404, 'NOT_FOUND')
+  return toPublicProduct(doc)
+}
+
+async function getProductBySlugPublic(slug) {
+  const doc = await Product.findOne({ slug, status: 'active' })
+    .populate('seller', 'fullName email avatarUrl')
+    .lean()
   if (!doc) throw new AppError('Product not found', 404, 'NOT_FOUND')
   return toPublicProduct(doc)
 }
@@ -178,6 +201,7 @@ async function deleteProduct(actor, id) {
 module.exports = {
   listProductsPublic,
   getProductByIdPublic,
+  getProductBySlugPublic,
   createProduct,
   updateProduct,
   deleteProduct,
