@@ -27,6 +27,80 @@ function toggleIdInList(list, id) {
   return list.includes(id) ? list.filter((x) => x !== id) : [...list, id]
 }
 
+const FiltersContent = ({
+  t,
+  i18n,
+  selectedCategories,
+  setSelectedCategories,
+  selectedFeatures,
+  setSelectedFeatures,
+  priceRange,
+  setPriceRange,
+  categoryCounts,
+}) => (
+  <div className="space-y-8">
+    <div>
+      <h3 className="font-bold text-[#1d1d1f] mb-4 text-sm uppercase tracking-wider">
+        {t('search.categories')}
+      </h3>
+      <div className="flex flex-col gap-3">
+        {CATEGORY_IDS.map((id) => (
+          <Checkbox
+            key={id}
+            checked={selectedCategories.includes(id)}
+            onChange={() =>
+              setSelectedCategories((prev) => toggleIdInList(prev, id))
+            }
+          >
+            {t(`search.category_labels.${id}`, {
+              count: categoryCounts[id] ?? 0,
+            })}
+          </Checkbox>
+        ))}
+      </div>
+    </div>
+
+    <div className="border-t border-gray-100 pt-8">
+      <h3 className="font-bold text-[#1d1d1f] mb-4 text-sm uppercase tracking-wider">
+        {t('search.price_range')}
+      </h3>
+      <Slider
+        range
+        min={0}
+        max={PRICE_MAX}
+        value={priceRange}
+        onChange={setPriceRange}
+      />
+      <div className="flex justify-between text-xs text-gray-500 mt-2 font-medium">
+        <span>0</span>
+        <span>
+          {formatVndAmount(PRICE_MAX, i18n.language)}
+          <span className="lowercase">+</span>
+        </span>
+      </div>
+    </div>
+
+    <div className="border-t border-gray-100 pt-8">
+      <h3 className="font-bold text-[#1d1d1f] mb-4 text-sm uppercase tracking-wider">
+        {t('search.features')}
+      </h3>
+      <div className="flex flex-col gap-3">
+        {FEATURE_IDS.map((id) => (
+          <Checkbox
+            key={id}
+            checked={selectedFeatures.includes(id)}
+            onChange={() =>
+              setSelectedFeatures((prev) => toggleIdInList(prev, id))
+            }
+          >
+            {t(`search.feature_labels.${id}`)}
+          </Checkbox>
+        ))}
+      </div>
+    </div>
+  </div>
+)
+
 const SearchResultsPage = () => {
   const { t, i18n } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -69,69 +143,17 @@ const SearchResultsPage = () => {
     setSearchParams(next, { replace: true })
   }
 
-  const FiltersContent = () => (
-    <div className="space-y-8">
-      <div>
-        <h3 className="font-bold text-[#1d1d1f] mb-4 text-sm uppercase tracking-wider">
-          {t('search.categories')}
-        </h3>
-        <div className="flex flex-col gap-3">
-          {CATEGORY_IDS.map((id) => (
-            <Checkbox
-              key={id}
-              checked={selectedCategories.includes(id)}
-              onChange={() =>
-                setSelectedCategories((prev) => toggleIdInList(prev, id))
-              }
-            >
-              {t(`search.category_labels.${id}`, {
-                count: categoryCounts[id] ?? 0,
-              })}
-            </Checkbox>
-          ))}
-        </div>
-      </div>
-
-      <div className="border-t border-gray-100 pt-8">
-        <h3 className="font-bold text-[#1d1d1f] mb-4 text-sm uppercase tracking-wider">
-          {t('search.price_range')}
-        </h3>
-        <Slider
-          range
-          min={0}
-          max={PRICE_MAX}
-          value={priceRange}
-          onChange={setPriceRange}
-        />
-        <div className="flex justify-between text-xs text-gray-500 mt-2 font-medium">
-          <span>0</span>
-          <span>
-            {formatVndAmount(PRICE_MAX, i18n.language)}
-            <span className="lowercase">+</span>
-          </span>
-        </div>
-      </div>
-
-      <div className="border-t border-gray-100 pt-8">
-        <h3 className="font-bold text-[#1d1d1f] mb-4 text-sm uppercase tracking-wider">
-          {t('search.features')}
-        </h3>
-        <div className="flex flex-col gap-3">
-          {FEATURE_IDS.map((id) => (
-            <Checkbox
-              key={id}
-              checked={selectedFeatures.includes(id)}
-              onChange={() =>
-                setSelectedFeatures((prev) => toggleIdInList(prev, id))
-              }
-            >
-              {t(`search.feature_labels.${id}`)}
-            </Checkbox>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+  const filtersProps = {
+    t,
+    i18n,
+    selectedCategories,
+    setSelectedCategories,
+    selectedFeatures,
+    setSelectedFeatures,
+    priceRange,
+    setPriceRange,
+    categoryCounts,
+  }
 
   return (
     <div className="bg-[#fbfbfd] min-h-screen py-10">
@@ -193,7 +215,7 @@ const SearchResultsPage = () => {
 
         <div className="flex flex-col md:flex-row gap-10">
           <div className="hidden md:block w-64 flex-shrink-0">
-            <FiltersContent />
+            <FiltersContent {...filtersProps} />
           </div>
 
           <div className="flex-1">
@@ -228,7 +250,7 @@ const SearchResultsPage = () => {
         open={mobileFiltersOpen}
         width={300}
       >
-        <FiltersContent />
+        <FiltersContent {...filtersProps} />
       </Drawer>
     </div>
   )

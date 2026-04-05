@@ -7,16 +7,14 @@ import ProductListPage from './pages/ProductListPage'
 import WishlistPage from './pages/WishlistPage'
 import BlogPage from './pages/BlogPage'
 import ProductDetailPage from './pages/ProductDetailPage'
-import { ConfigProvider, Input } from 'antd'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
-import { ConfigProvider } from 'antd'
+import { ConfigProvider, Input } from 'antd'
 import {
   UserOutlined,
   ShoppingCartOutlined,
   HeartOutlined,
   SearchOutlined,
-  MessageOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
@@ -58,123 +56,65 @@ function App() {
         },
       }}
     >
-      <div className="min-h-screen bg-white text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] pb-10">
-        <header className="sticky top-0 z-50 bg-[#0071e3] shadow-md shadow-blue-900/20">
-          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 pt-3 pb-2">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
-              <Link
-                to="/"
-                className="shrink-0 text-center lg:text-left no-underline"
-              >
-                <span className="text-xl font-bold tracking-tight text-white sm:text-2xl">
-                  {t('layout.brand')}
-                </span>
+      <div className="min-h-screen bg-[#fbfbfd] text-[#1d1d1f] selection:bg-[#0071e3]/20 selection:text-[#0071e3] transition-colors duration-500">
+        <header className="sticky top-0 z-50 bg-[#0071e3]/95 backdrop-blur-md shadow-lg shadow-blue-900/10 border-b border-white/10 transition-all duration-300">
+          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-18 py-3">
+            {/* Brand Logo */}
+            <div className="flex items-center gap-10">
+              <Link to="/" className="flex items-center group no-underline">
+                <h1 className="text-xl font-black tracking-tighter text-white inline-flex items-center gap-2 mb-0">
+                  <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center group-hover:rotate-6 transition-transform">
+                    <div className="w-2.5 h-2.5 bg-[#0071e3] rounded-full" />
+                  </div>
+                  LIFESTYLE
+                </h1>
               </Link>
 
-              <div className="flex flex-1 justify-center min-w-0">
-                <Input
-                  size="large"
-                  allowClear
-                  value={headerQ}
-                  onChange={(e) => setHeaderQ(e.target.value)}
-                  onPressEnter={submitHeaderSearch}
-                  placeholder={t('layout.header_search_placeholder')}
-                  prefix={
-                    <SearchOutlined
-                      className="text-gray-400 cursor-pointer hover:text-[#0071e3]"
-                      onClick={submitHeaderSearch}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) =>
-                        e.key === 'Enter' && submitHeaderSearch()
-                      }
-                    />
-                  }
-                  className="max-w-2xl w-full rounded-full bg-white border-0 shadow-inner"
-                  styles={{
-                    input: { backgroundColor: 'transparent' },
-                  }}
-                />
-              </div>
-
-              <div className="flex items-center justify-center lg:justify-end gap-5 text-white shrink-0">
-                <Link
-                  to="/cart"
-                  className="relative flex items-center text-blue-100 hover:text-white transition-colors"
-                >
-                  <ShoppingCartOutlined className="text-xl" />
-                  <span className="absolute -top-2 -right-2 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-white text-[10px] font-bold text-[#0071e3]">
-                    0
-                  </span>
-                </Link>
-                <Link
-                  to="/wishlist"
-                  className="text-blue-100 hover:text-white transition-colors"
-                >
-                  <HeartOutlined className="text-xl" />
-                </Link>
-                <button
-                  type="button"
-                  className="text-blue-100 hover:text-white transition-colors"
-                  aria-label="Chat"
-                >
-                  <MessageOutlined className="text-xl" />
-                </button>
-                <Link
-                  to="/account"
-                  className="text-blue-100 hover:text-white transition-colors"
-                >
-                  <UserOutlined className="text-xl" />
-                </Link>
-                <div className="h-5 w-px bg-blue-300/80" />
-                <button
-                  type="button"
-                  onClick={toggleLanguage}
-                  className="text-xs font-bold uppercase text-white hover:text-blue-100 w-7"
-                >
-                  {i18n.language === 'vi' ? 'VI' : 'EN'}
-                </button>
-              <div className="hidden md:flex gap-6 items-center text-[12px] font-bold uppercase tracking-widest text-blue-50">
-                <Link className="transition-colors hover:text-white" to="/search">{t('nav.shop')}</Link>
-                <Link className="transition-colors hover:text-white" to="/mac">{t('nav.mac')}</Link>
-                <Link className="transition-colors hover:text-white" to="/ipad">{t('nav.ipad')}</Link>
-                <Link className="transition-colors hover:text-white" to="/blog">{t('nav.newsroom')}</Link>
+              {/* Main Desktop Navigation */}
+              <div className="hidden lg:flex gap-8 items-center text-[11px] font-bold uppercase tracking-[0.2em] text-blue-100">
+                <Link className="transition-all hover:text-white hover:tracking-[0.25em]" to="/products">{t('nav.shop')}</Link>
+                <Link className="transition-all hover:text-white hover:tracking-[0.25em]" to="/blog">{t('nav.newsroom')}</Link>
+                <Link className="transition-all hover:text-white hover:tracking-[0.25em]" to="/contact">{t('nav.contact', 'Contact')}</Link>
               </div>
             </div>
 
-            <nav
-              className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-3 text-sm font-medium text-blue-100 border-t border-white/10 mt-2"
-              aria-label="Main"
-            >
-              <Link className="hover:text-white transition-colors" to="/products">
-                {t('nav.shop')}
-              </Link>
-              <Link className="hover:text-white transition-colors" to="/search">
-                {t('nav.collections')}
-              <Link to={user ? "/account" : "/login"} className="transition-colors hover:text-white">
-                <UserOutlined className="text-[17px]" />
-              </Link>
-              <Link className="hover:text-white transition-colors" to="/blog">
-                {t('nav.blog')}
-              </Link>
-              <span className="hover:text-white transition-colors cursor-default">
-                {t('nav.contact')}
-              </span>
-              <span className="hover:text-white transition-colors cursor-default">
-                {t('nav.about')}
-              </span>
-            </nav>
-          </div>
+            {/* Quick Actions (Search, Cart, Wishlist, User, Lang) */}
+            <div className="flex gap-6 items-center justify-end text-white">
+              {/* Compact Search */}
+              <div className="hidden sm:block">
+                <Input
+                  variant="borderless"
+                  placeholder={t('layout.header_search_placeholder')}
+                  value={headerQ}
+                  onChange={(e) => setHeaderQ(e.target.value)}
+                  onPressEnter={submitHeaderSearch}
+                  prefix={<SearchOutlined className="text-gray-400 hover:text-[#0071e3] transition-colors cursor-pointer text-lg" onClick={submitHeaderSearch} />}
+                  className="!w-80 !h-11 !bg-white !rounded-full !placeholder-gray-400 !text-gray-800 !text-sm !font-medium hover:!shadow-md focus:!w-96 transition-all duration-300 border-none px-4"
+                />
+              </div>
 
-              <div className="h-4 w-px bg-blue-300 ml-1" />
-
-              {/* Language Switcher */}
-              <button
-                onClick={toggleLanguage}
-                className="text-xs font-bold text-white uppercase hover:text-blue-200 transition-colors cursor-pointer w-6"
-              >
-                {i18n.language === 'vi' ? 'VI' : 'EN'}
-              </button>
+              <div className="flex gap-5 items-center">
+                <Link to="/wishlist" className="transition-all hover:text-white hover:scale-110 relative text-white/80">
+                  <HeartOutlined className="text-[19px]" />
+                </Link>
+                <Link to="/cart" className="transition-all hover:text-white hover:scale-110 flex items-center relative text-white/80 group">
+                  <ShoppingCartOutlined className="text-[19px]" />
+                  <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-white text-[9px] font-black text-[#0071e3] shadow-sm">
+                    0
+                  </span>
+                </Link>
+                <Link to={user ? "/account" : "/login"} className="transition-all hover:text-white hover:scale-110 text-white/80">
+                  <UserOutlined className="text-[19px]" />
+                </Link>
+                <div className="h-4 w-px bg-white/20 mx-1" />
+                <button
+                  type="button"
+                  onClick={toggleLanguage}
+                  className="text-[10px] font-black text-white uppercase hover:text-blue-200 transition-colors cursor-pointer w-6 h-6 flex items-center justify-center rounded-full border border-white/20"
+                >
+                  {i18n.language === 'vi' ? 'VI' : 'EN'}
+                </button>
+              </div>
             </div>
           </nav>
         </header>
