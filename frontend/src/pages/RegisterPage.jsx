@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined, IdcardOutlined, RightOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, IdcardOutlined, RightOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { authApi } from '../services/authApi';
 

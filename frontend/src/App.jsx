@@ -15,7 +15,6 @@ import {
   ShoppingCartOutlined,
   HeartOutlined,
   SearchOutlined,
-  MessageOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
