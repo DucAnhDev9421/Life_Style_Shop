@@ -4,7 +4,7 @@
 export function normalizeVnPhone(raw) {
   return String(raw || '')
     .trim()
-    .replace(/[\s.\-]/g, '')
+    .replace(/[\s.-]/g, '')
 }
 
 /**

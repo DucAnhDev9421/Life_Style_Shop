@@ -19,7 +19,7 @@ import {
   SearchOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { useCart } from './context/CartContext.jsx'
+import { useCart } from './context/useCart.js'
 import { AUTH_CHANGED_EVENT } from './utils/authEvents.js'
 
 function App() {
