@@ -59,7 +59,7 @@ const ProductCard = ({
             src={
               Array.isArray(product.images) && product.images.length > 0
                 ? product.images[0]
-                : (product.image || '')
+                : product.image || null
             }
             alt=""
             className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
